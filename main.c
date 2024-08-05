@@ -3,6 +3,6 @@
 
 int	main(void)
 {
-	display_prompt(void);
+	display_prompt();
 	return (0);
 }
