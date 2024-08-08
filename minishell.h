@@ -16,6 +16,11 @@
 # include "libft/libft.h"
 # include "printf/ft_printf.h"
 
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1 
+# endif
+
 typedef struct s_tabenv
 {
     char **env_vars;
@@ -45,6 +50,31 @@ char	*print_env(t_tabenv *tabenv);
 // unset
 int unset_var(const char *name, t_tabenv *tabenv);
 
+// pipex bonus
+void	exec(char *cmd, char **env);
+void	child(char *cmd, int *p_fd, char **env);
+void	parent(int *p_fd);
+int	create_a_pipe(char *cmd, char **env);
+int	here_doc(char **av);
+void	my_free_tab(char **tab);
+int	find_path_var(char *name);
+char	*find_path_variable_function(char **env);
+char	*get_every_path(char **env, char *cmd);
+int	open_file(char *file, int in_or_out);
+void	no_here_doc(char **av, int i);
+void	finish_pipe(char **av, int ac, char **env);
+
+
+// gnl
+char	*get_next_line(int fd);
+// char	*ft_substr(char const *s, unsigned int start, size_t len);
+// char	*ft_strdup(const char *s);
+// char	*ft_strchr(const char *s, int i);
+char	*manage_storage(char *storage, char *buffer);
+char	*make_line(int fd, char *buffer, char *storage);
+void	free_backup(char *backup);
+char	*my_extract(char *line);
+void	free_storage(char *storage);
 
 
 #endif 

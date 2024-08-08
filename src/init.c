@@ -20,12 +20,5 @@ int init_env_tab(t_tabenv *tabenv, char **envp)
     copy_of_env[env_len] = NULL;
     tabenv->env_vars = copy_of_env;
     ft_printf("copy of env done !\n");
-
-    // int i = 0;
-    // while (tabenv->env_vars[i])
-    // {
-    //     printf("%s\n", tabenv->env_vars[i]);
-    //     i++;
-    // }
     return (0);
 }
