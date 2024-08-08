@@ -7,20 +7,18 @@
 # include <stdlib.h>
 # include "../../minishell.h"
 
-void	exec(char *cmd, char **env)
-//int	exec(char *cmd, char **env)
+int	exec(char *cmd, char **env)
 {
 	char	*path;
 	char	**argv;
 
 	argv = ft_split(cmd, ' ');
 	path = get_every_path(env, argv[0]);
-	// if (execve(path, argv, env) == -1)
-	// {
-	// 	return (0);
-	// 	// exit(0);
-	// }
-	// return (1);
+	if (execve(path, argv, env) == -1)
+	{
+		return (0);
+		// exit(0);
+	}
 }
 
 // writing phase, on close R end of pipe, dup file W as EXIT    W == EXIT

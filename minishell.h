@@ -51,8 +51,8 @@ char	*print_env(t_tabenv *tabenv);
 int unset_var(const char *name, t_tabenv *tabenv);
 
 // pipex bonus
-void	exec(char *cmd, char **env);
-//int	exec(char *cmd, char **env);
+//void	exec(char *cmd, char **env);
+int	exec(char *cmd, char **env);
 void	child(char *cmd, int *p_fd, char **env);
 void	parent(int *p_fd);
 int	create_a_pipe(char *cmd, char **env);
