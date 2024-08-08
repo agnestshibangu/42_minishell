@@ -22,29 +22,14 @@ void	no_here_doc(char **av, int i)
 
 int	main(int ac, char **av, char **envp)
 {
-	int		i;
-	char	*cmd;
-
 	t_tabenv tabenv;
+	(void)ac;
+	(void)av;
 
 	init_env_tab(&tabenv, envp);
-	if (ft_strncmp(av[1], "here_doc", 8) == 0)
-	{
-		here_doc(av);
-		i = 3;
-	}
-	else
-	{
-		i = 2;
-		no_here_doc(av, i);
-	}
-	while (i < ac - 2)
-	{
-		cmd = av[i];
-		create_a_pipe(cmd, envp);
-		i++;
-	}
-	finish_pipe(av, ac, envp);
+	handle_pipex(av, ac, &tabenv);
+	
+	free_minishell(&tabenv);
 	return (0);
 }
 

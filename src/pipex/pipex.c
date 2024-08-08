@@ -8,16 +8,19 @@
 # include "../../minishell.h"
 
 void	exec(char *cmd, char **env)
+//int	exec(char *cmd, char **env)
 {
 	char	*path;
 	char	**argv;
 
 	argv = ft_split(cmd, ' ');
 	path = get_every_path(env, argv[0]);
-	if (execve(path, argv, env) == -1)
-	{
-		exit(0);
-	}
+	// if (execve(path, argv, env) == -1)
+	// {
+	// 	return (0);
+	// 	// exit(0);
+	// }
+	// return (1);
 }
 
 // writing phase, on close R end of pipe, dup file W as EXIT    W == EXIT
@@ -154,27 +157,29 @@ int	open_file(char *file, int in_or_out)
 	return (ret);
 }
 
-// int	main(int ac, char **av, char **env)
-// {
-// 	pid_t	pid;
-// 	int		p_fd[2];
+void handle_pipex(char **av, int ac, t_tabenv *tabenv)
+{	
+	int		i;
+	char	*cmd;
+	char 	**tab;
 
-// 	if (parsing(ac, av) == -1)
-// 		return (1);
-// 	find_path_variable_function(env);
-// 	if (ac != 5)
-// 	{	
-// 		ft_printf("too many or too few arguments");
-// 		return (0);
-// 	}
-// 	if (pipe(p_fd) == -1)
-// 		return (0);
-// 	pid = fork();
-// 	if (pid == -1)
-// 		return (0);
-// 	else if (pid == 0)
-// 		child(av, p_fd, env);
-// 	else
-// 		parent(av, p_fd, env);
-// 	return (0);
-// }
+	tab = tabenv->env_vars;
+	i = 0;
+	if (ft_strncmp(av[1], "here_doc", 8) == 0)
+	{
+		here_doc(av);
+		i = 3;
+	}
+	else
+	{
+		i = 2;
+		no_here_doc(av, i);
+	}
+	while (i < ac - 2)
+	{
+		cmd = av[i];
+		create_a_pipe(cmd, tab);
+		i++;
+	}
+	finish_pipe(av, ac, tab);
+}

@@ -32,6 +32,7 @@ SRC		= 	src/init.c \
 			src/pipex/gnl_function.c \
 			src/pipex/gnl_utils.c \
 			src/pipex/gnl.c \
+			src/free.c \
 	
 	
 OBJ		= $(SRC:.c=.o)
