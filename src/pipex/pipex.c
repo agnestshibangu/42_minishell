@@ -7,17 +7,20 @@
 # include <stdlib.h>
 # include "../../minishell.h"
 
-int	exec(char *cmd, char **env)
+//int	exec(char *cmd, char **env)
+void	exec(char *cmd, char **env)
 {
 	char	*path;
 	char	**argv;
 
 	argv = ft_split(cmd, ' ');
 	path = get_every_path(env, argv[0]);
+	printf("coucou\n");
+	fflush(stdout);
 	if (execve(path, argv, env) == -1)
 	{
-		return (0);
-		// exit(0);
+		// return (0);
+		exit(0);
 	}
 }
 
@@ -155,6 +158,30 @@ int	open_file(char *file, int in_or_out)
 	return (ret);
 }
 
+void	finish_pipe(char **av, int ac, char **env)
+{
+	int		fd_out;
+
+	fd_out = open_file(av[ac - 1], 1);
+	dup2(fd_out, 1);
+	close(fd_out);
+	printf("coucoul\n");
+	fflush(stdout);
+	exec(av[ac - 2], env);
+}
+
+//void	no_here_doc(char **av, int i)
+void	no_here_doc(char **av)
+{
+	int	fd_in;
+
+	fd_in = open_file(av[1], 0);
+	dup2(fd_in, 0);
+	close(fd_in);
+	// i = 2;
+}
+
+
 void handle_pipex(char **av, int ac, t_tabenv *tabenv)
 {	
 	int		i;
@@ -171,7 +198,7 @@ void handle_pipex(char **av, int ac, t_tabenv *tabenv)
 	else
 	{
 		i = 2;
-		no_here_doc(av, i);
+		no_here_doc(av);
 	}
 	while (i < ac - 2)
 	{

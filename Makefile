@@ -10,10 +10,10 @@ LIBFT_DIR := ./libft/
 LIBFT_SRCS := $(wildcard $(LIBFT_DIR)*.c)
 LIBFT_OBJS := $(patsubst $(LIBFT_DIR)%.c, $(LIBFT_DIR)%.o, $(LIBFT_SRCS))
 
-# printf 
-PRINTF_DIR := ./printf/
-PRINTF_SRCS := $(wildcard $(PRINTF_DIR)*.c)
-PRINTF_OBJS := $(patsubst $(PRINTF_DIR)%.c, $(PRINTF_DIR)%.o, $(PRINTF_SRCS))
+# # printf 
+# PRINTF_DIR := ./printf/
+# PRINTF_SRCS := $(wildcard $(PRINTF_DIR)*.c)
+# PRINTF_OBJS := $(patsubst $(PRINTF_DIR)%.c, $(PRINTF_DIR)%.o, $(PRINTF_SRCS))
 
 # program files
 # SRC		= 	$(PRINTF_OBJS) \
@@ -43,15 +43,15 @@ all : $(NAME)
 		$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
 
 #printf
-$(PRINTF_OBJS): $(PRINTF_SRCS)
-	@make -C $(PRINTF_DIR)
+# $(PRINTF_OBJS): $(PRINTF_SRCS)
+# 	@make -C $(PRINTF_DIR)
 #libft
 $(LIBFT_OBJS): $(LIBFT_SRCS)
 	@make -C $(LIBFT_DIR)
 
 # Compiling minishell
-$(NAME): $(OBJ) $(PRINTF_OBJS) $(LIBFT_OBJS)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(PRINTF_OBJS) $(LIBFT_OBJS) -g
+$(NAME): $(OBJ) $(LIBFT_OBJS)
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LIBFT_OBJS) -g
 	@echo "  "
 	@echo "  "
 	@echo "MINISHELL"

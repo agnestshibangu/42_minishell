@@ -10,7 +10,7 @@ int export_var(char *name, t_tabenv *tabenv)
     char **new_env_vars = malloc(sizeof(char *) * (i + 2));
     if (!new_env_vars)
     {
-        ft_printf("error");
+        printf("error");
         return (1);
     }
     i = 0;
@@ -22,7 +22,7 @@ int export_var(char *name, t_tabenv *tabenv)
     new_env_vars[i] = strdup(name);
     new_env_vars[i + 1] = NULL;
     tabenv->env_vars = new_env_vars;
-    ft_printf("successfully adding variable\n");
+    printf("successfully adding variable\n");
     return (1);
 }
 
