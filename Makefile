@@ -27,7 +27,6 @@ SRC		= 	src/init.c \
 			src/builtins/pwd_builtins.c \
 			src/builtins/unset_builtins.c \
 			src/builtins/export_builtins.c \
-			src/builtins/exit_builtins.c \
 			src/pipex/pipex.c \
 			src/pipex/gnl_function.c \
 			src/pipex/gnl_utils.c \
