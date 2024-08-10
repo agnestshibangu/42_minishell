@@ -2,21 +2,13 @@
 NAME	=  minishell
 
 # Compiler options
-CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -g
+CC		= cc -g
+CFLAGS	= -Wall -Wextra -Werror
 
 #libft
 LIBFT_DIR := ./libft/
 LIBFT_SRCS := $(wildcard $(LIBFT_DIR)*.c)
 LIBFT_OBJS := $(patsubst $(LIBFT_DIR)%.c, $(LIBFT_DIR)%.o, $(LIBFT_SRCS))
-
-# # printf 
-# PRINTF_DIR := ./printf/
-# PRINTF_SRCS := $(wildcard $(PRINTF_DIR)*.c)
-# PRINTF_OBJS := $(patsubst $(PRINTF_DIR)%.c, $(PRINTF_DIR)%.o, $(PRINTF_SRCS))
-
-# program files
-# SRC		= 	$(PRINTF_OBJS) \
 
 SRC		= 	src/init.c \
 			src/main.c \
@@ -39,18 +31,14 @@ OBJ		= $(SRC:.c=.o)
 all : $(NAME)
 
 %.o: %.c
-		$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
+	$(CC) $(CFLAGS) -c $< -o $@ 
 
-#printf
-# $(PRINTF_OBJS): $(PRINTF_SRCS)
-# 	@make -C $(PRINTF_DIR)
-#libft
 $(LIBFT_OBJS): $(LIBFT_SRCS)
 	@make -C $(LIBFT_DIR)
 
 # Compiling minishell
 $(NAME): $(OBJ) $(LIBFT_OBJS)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LIBFT_OBJS) -g
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LIBFT_OBJS) -lreadline
 	@echo "  "
 	@echo "  "
 	@echo "MINISHELL"
