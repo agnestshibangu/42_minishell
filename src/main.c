@@ -78,9 +78,7 @@ int main(int ac, char **av, char **envp)
 	// -------------------- 
 	// (3) INIT ENV AND PARAM
 	init_env_tab(&tabenv, envp);
-	// (3) SET UP SIGNALS
-
-	// (4) SHOW PROMPT
+	// (3) SET UP SIGNALS (4) SHOW PROMPT
 	show_prompt();
 	// (5) FREE AND CLEAN
 	free_minishell(&tabenv);
