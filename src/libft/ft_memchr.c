@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo_builtins.c                                    :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/11 11:11:58 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/11 11:11:59 by thsion           ###   ########.fr       */
+/*   Created: 2023/10/16 19:24:39 by agtshiba          #+#    #+#             */
+/*   Updated: 2024/08/11 13:25:38 by thsion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
+#include <string.h>
 #include "../../minishell.h"
 
-void	echo(char *str, int out)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-    ft_putstr_fd("je suis la fonction echo : ", out);
-    ft_putstr_fd(str, out); 
-    ft_putstr_fd("\n", out);
-}
+	size_t	i;
 
+	i = 0;
+	while (i < n)
+	{
+		if (*(unsigned char *)(s + i) == (unsigned char)c)
+			return ((void *)(s + i));
+		i++;
+	}
+	return (NULL);
+}

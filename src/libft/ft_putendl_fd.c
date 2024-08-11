@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo_builtins.c                                    :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/11 11:11:58 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/11 11:11:59 by thsion           ###   ########.fr       */
+/*   Created: 2023/10/16 19:25:05 by agtshiba          #+#    #+#             */
+/*   Updated: 2024/08/11 13:25:58 by thsion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include <unistd.h>
 
-void	echo(char *str, int out)
+void	ft_putendl_fd(char *s, int fd)
 {
-    ft_putstr_fd("je suis la fonction echo : ", out);
-    ft_putstr_fd(str, out); 
-    ft_putstr_fd("\n", out);
-}
+	size_t	i;
 
+	i = 0;
+	while (s[i])
+		write(fd, &s[i++], 1);
+	write(fd, "\n", 1);
+}
+// #include "libft.h"
+// void	ft_putendl_fd(char *s, int fd)
+// {
+// 	int	i;
+// 	i = 0;
+// 	while (s[i])
+// 		i++;
+// 	write(fd, s, i);
+// 	write(fd, "\n", 1);
+// }

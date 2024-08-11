@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo_builtins.c                                    :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/11 11:11:58 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/11 11:11:59 by thsion           ###   ########.fr       */
+/*   Created: 2023/10/17 15:45:22 by agtshiba          #+#    #+#             */
+/*   Updated: 2024/08/11 13:26:23 by thsion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	echo(char *str, int out)
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-    ft_putstr_fd("je suis la fonction echo : ", out);
-    ft_putstr_fd(str, out); 
-    ft_putstr_fd("\n", out);
-}
+	int	i;
 
+	i = 0;
+	if (s && f)
+	{
+		while (s[i])
+		{
+			f(i, &s[i]);
+			i++;
+		}
+	}
+}

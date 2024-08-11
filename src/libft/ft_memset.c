@@ -1,21 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo_builtins.c                                    :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/11 11:11:58 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/11 11:11:59 by thsion           ###   ########.fr       */
+/*   Created: 2023/10/16 19:24:54 by agtshiba          #+#    #+#             */
+/*   Updated: 2024/08/11 13:25:52 by thsion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-void	echo(char *str, int out)
+void	*ft_memset(void *b, int c, size_t len)
 {
-    ft_putstr_fd("je suis la fonction echo : ", out);
-    ft_putstr_fd(str, out); 
-    ft_putstr_fd("\n", out);
-}
+	unsigned char	*ptr;
 
+	ptr = (unsigned char *)b;
+	while (len--)
+		*(ptr++) = (unsigned char)c;
+	return (b);
+}
+// void    *ft_memset(void *b, int c, size_t len)
+// {
+//     size_t      i;
+//     i = 0;
+//     if (!b)
+//         return (NULL);
+//     while(i < len)
+//     {
+//         *(unsigned char*)(b + i) = (unsigned char)c;
+//         i++;
+//     }
+//     return (b);
+// }

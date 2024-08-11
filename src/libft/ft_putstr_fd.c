@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo_builtins.c                                    :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/11 11:11:58 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/11 11:11:59 by thsion           ###   ########.fr       */
+/*   Created: 2023/10/16 19:25:13 by agtshiba          #+#    #+#             */
+/*   Updated: 2024/08/11 13:26:06 by thsion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include "../../minishell.h"
 
-void	echo(char *str, int out)
+void	ft_putstr_fd(char *s, int fd)
 {
-    ft_putstr_fd("je suis la fonction echo : ", out);
-    ft_putstr_fd(str, out); 
-    ft_putstr_fd("\n", out);
+	if (s == NULL)
+		return ((void) NULL);
+	while (*s)
+		write(fd, s++, 1);
 }
 
+// int main()
+// {
+//    	char *message = "hellooooooo";
+//   	int fileDescriptor = 1;
+//    	ft_putstr_fd(message, fileDescriptor); 
+// }

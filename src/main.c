@@ -1,27 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/11 11:11:36 by thsion            #+#    #+#             */
+/*   Updated: 2024/08/11 12:54:48 by thsion           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-
-void	new_routine(int signal)
+int	g_status;
+// EXEMPLE DE PROCESSUS D'EXECUTION :
+/* void	general_exec(input, data)
 {
-	if (signal == SIGINT)
-	{
-		printf("\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();// implementer systeme pour avoir une nouvelle ligne vide
-	}
-}
- 
-void	signal_handler(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_flags = SA_RESTART;
-	sa.sa_handler = new_routine;
-	sigemptyset(&sa.sa_mask);
-	sigaction(SIGINT, &sa, NULL);
-	signal(SIGQUIT, SIG_IGN);
-}
+	if(builtin)
+		-----> exec_bulting.c
+	if (pipe)
+		------ > exec_pipe.c
+} */
 
 void 	show_prompt()
 {

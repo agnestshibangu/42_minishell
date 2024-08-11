@@ -1,28 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_builtins.c                                     :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/11 11:12:02 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/11 11:12:03 by thsion           ###   ########.fr       */
+/*   Created: 2023/10/16 19:25:37 by agtshiba          #+#    #+#             */
+/*   Updated: 2024/08/11 13:26:32 by thsion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "../../minishell.h"
 
-char	*print_env(t_tabenv *tabenv)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (tabenv->env_vars[i])
+	if (size > 0)
 	{
-		ft_putstr_fd(tabenv->env_vars[i], 1);
-        ft_putchar_fd('\n', 1);
-		i++;
+		while (src[i] && i < (size - 1))
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		dst[i] = 0;
 	}
-	return (NULL);
+	while (src[i])
+		i++;
+	return (i);
 }
 
+// int main()
+// {
+//     char dest[20];
+//     char src[] = "hello world";
+//     size_t size = sizeof(dest);
+//     size_t result = ft_strlcpy(dest, src, size);
+//     printf("%s", dest);
+//     printf("%zu", result);
+// }
