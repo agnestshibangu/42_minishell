@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
+/*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:11:36 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/11 12:54:48 by thsion           ###   ########.fr       */
+/*   Updated: 2024/08/11 16:36:09 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,12 @@ int	g_status;
 		------ > exec_pipe.c
 } */
 
-void 	show_prompt()
+void general_exec(char *command, t_tabenv *tabenv)
+{
+	is_builtin(command, tabenv);
+}
+
+void 	show_prompt(t_tabenv *tabenv)
 {
 	char *command;
 
@@ -40,7 +45,7 @@ void 	show_prompt()
 		if (command)
 		{
 			add_history(command);
-			echo(command, 1);
+			general_exec(command, tabenv);
 		} 
 		// free(command);
 	}
@@ -64,7 +69,7 @@ int main(int ac, char **av, char **envp)
 	// (3) INIT ENV AND PARAM
 	init_env_tab(&tabenv, envp);
 	// (3) SET UP SIGNALS (4) SHOW PROMPT
-	show_prompt();
+	show_prompt(&tabenv);
 	// (5) FREE AND CLEAN
 	free_minishell(&tabenv);
 	return (0);

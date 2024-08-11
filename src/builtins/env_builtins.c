@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_builtins.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
+/*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:12:02 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/11 11:12:03 by thsion           ###   ########.fr       */
+/*   Updated: 2024/08/11 16:34:23 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-char	*print_env(t_tabenv *tabenv)
+char	*ft_env(t_tabenv *tabenv)
 {
 	int	i;
 

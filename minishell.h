@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
+/*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:12:53 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/11 13:38:27 by thsion           ###   ########.fr       */
+/*   Updated: 2024/08/11 16:38:47 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,15 @@ int		free_minishell(t_tabenv *tabenv); // free the minishell at the very end
 /*				BUILTINS				*/
 
 // echo_builtins.c
-void	echo(char *str, int out);
+void	ft_echo(char *str, int out);
 
 // cd_builtins.c
-int		change_directory(char *str);
+int		ft_cd(char *str);
 
 // pwd_builtins.c
 int		ft_pwd(void);
 // export_builtins.c
-int		export_var(char *name, t_tabenv *tabenv);
+int		ft_export(char *name, t_tabenv *tabenv);
 // unset_builtins.c
 
 
@@ -69,12 +69,16 @@ int		export_var(char *name, t_tabenv *tabenv);
 
 
 // exit_builtins.c
-void	handle_exit(char *input);
+// void	ft_exit(char *input);
+void 	ft_exit();
 
-char	*print_env(t_tabenv *tabenv);
+char	*ft_env(t_tabenv *tabenv);
 
 // unset_builtins.c
-int		unset_var(const char *name, t_tabenv *tabenv);
+int ft_unset(const char *str, t_tabenv *tabenv);
+
+// run builtins
+void is_builtin(char *command, t_tabenv *tabenv);
 
 /*				PIPEX & GNL				*/
 // pipex bonus
