@@ -1,8 +1,13 @@
 #include "../../minishell.h"
 
-int change_directory(char *str)
+int ft_cd(char *str)
 {
     char *path;
+    
+    int i = 0;
+    while (str[i] != ' ')
+        i++;
+    i = i + 1;
 
     if (!str || strcmp(str, "~") == 0)
     {

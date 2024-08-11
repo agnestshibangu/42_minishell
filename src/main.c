@@ -38,7 +38,12 @@ void	signal_handler(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void 	show_prompt()
+void general_exec(char *command, t_tabenv *tabenv)
+{
+	is_builtin(command, tabenv);
+}
+
+void 	show_prompt(t_tabenv *tabenv)
 {
 	char *command;
 
@@ -55,9 +60,9 @@ void 	show_prompt()
 		if (command)
 		{
 			add_history(command);
-			echo(command, 1);
+			general_exec(command, tabenv);
 		} 
-		// free(command);
+		
 	}
 }
 
@@ -79,59 +84,10 @@ int main(int ac, char **av, char **envp)
 	// (3) INIT ENV AND PARAM
 	init_env_tab(&tabenv, envp);
 	// (3) SET UP SIGNALS (4) SHOW PROMPT
-	show_prompt();
+	show_prompt(&tabenv);
 	// (5) FREE AND CLEAN
 	free_minishell(&tabenv);
 	return (0);
 }
 
 
-
-// int main(int ac, char **av, char **envp)
-// {
-// 	t_tabenv tabenv;
-
-// 	// pid_t	pid;
-// 	// int		p_fd[2];
-
-// 	//find_path_variable_function(envp);
-	
-// 	(void)ac;
-// 	(void)av;
-// 	char *command;
-// 	command = NULL;
-// 	// char *name;
-
-// 	// name = "allo=4";
-// 	// str = "~";
-
-// 	// (1) BOOL PARSING
-// 	// (2) INPUT CLEAN
-// 	// (3) INIT ENV AND PARAM
-// 	init_env_tab(&tabenv, envp);
-// 	// (3) SET UP SIGNALS
-// 	// (4) SHOW PROMPT
-// 	while (1)
-// 	{	
-
-
-
-// 	}
-// 	// (5) FREE AND CLEAN
-
-
-// 	// builtin print env
-// 	//print_env(&tabenv);
-// 	// builtin echo
-// 	// echo(str, 1);
-// 	// unset var
-// 	// unset_var(name, &tabenv);
-// 	// pwd
-// 	// ft_pwd();
-// 	// export 
-// 	// export_var(name, &tabenv);
-// 	// cd
-// 	// change_directory(str);
-// 	// handle_exit(av[1]);
-// 	return (0);
-// }

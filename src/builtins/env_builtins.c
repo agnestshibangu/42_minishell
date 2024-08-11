@@ -1,6 +1,6 @@
 #include "../../minishell.h"
 
-char	*print_env(t_tabenv *tabenv)
+char	*ft_env(t_tabenv *tabenv)
 {
 	int	i;
 

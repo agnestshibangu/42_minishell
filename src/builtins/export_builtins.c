@@ -2,9 +2,37 @@
 
 // replace ("") puis newline puis display 
 
-int export_var(char *name, t_tabenv *tabenv)
+
+int ft_export(char *str, t_tabenv *tabenv)
 {
-    int i = 0;
+    char *name = NULL;
+    int i;
+    int y;
+    int name_len;
+
+    i = 0;
+    y = 0;
+    name_len = 0;
+
+    // isolating argument
+    while (str[i] != ' ')
+        i++;
+    i = i + 1;
+    
+  
+    while (str[i + name_len])
+        name_len++;
+
+    name = (char *)malloc(sizeof(char) * (name_len + 1));
+    if (!name)
+    {
+        printf("Memory allocation error\n");
+        return (1);
+    }    
+
+    while (str[i])
+        name[y++] = str[i++];
+
     while (tabenv->env_vars[i] != NULL)
         i++;
     char **new_env_vars = malloc(sizeof(char *) * (i + 2));
@@ -22,7 +50,6 @@ int export_var(char *name, t_tabenv *tabenv)
     new_env_vars[i] = strdup(name);
     new_env_vars[i + 1] = NULL;
     tabenv->env_vars = new_env_vars;
-    printf("successfully adding variable\n");
     return (1);
 }
 

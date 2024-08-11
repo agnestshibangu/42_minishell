@@ -31,24 +31,24 @@ int init_env_tab(t_tabenv *tabenv, char **envp);
 
 // --- builtins ---
 
+
+// run builtins
+void is_builtin(char *command, t_tabenv *tabenv);
+
 // echo
-void	echo(char *str, int out);
+void	ft_echo(char *str, int out);
 // cd
-int change_directory(char *str);
+int ft_cd(char *str);
 // pwd
 int     ft_pwd(void);
 // export
-int export_var(char *name, t_tabenv *tabenv);
-// unset 
-
-// env
+int ft_export(char *str, t_tabenv *tabenv);
 // exit
-void handle_exit(char *input);
-
-char	*print_env(t_tabenv *tabenv);
+void ft_exit(void);
+char	*ft_env(t_tabenv *tabenv);
 
 // unset
-int unset_var(const char *name, t_tabenv *tabenv);
+int ft_unset(const char *str, t_tabenv *tabenv);
 
 // pipex bonus
 void	exec(char *cmd, char **env);
