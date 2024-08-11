@@ -2,7 +2,6 @@
 
 // replace ("") puis newline puis display 
 
-
 int ft_export(char *str, t_tabenv *tabenv)
 {
     char *name = NULL;
@@ -50,6 +49,8 @@ int ft_export(char *str, t_tabenv *tabenv)
     new_env_vars[i] = strdup(name);
     new_env_vars[i + 1] = NULL;
     tabenv->env_vars = new_env_vars;
+    free(name);
+    free(new_env_vars);
     return (1);
 }
 

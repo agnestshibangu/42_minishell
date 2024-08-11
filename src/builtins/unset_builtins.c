@@ -47,6 +47,7 @@ int ft_unset(const char *str, t_tabenv *tabenv)
         }
         x++;
     }
+    free(name);
     printf("failed the remove the variable\n");
     return (1);
 }
