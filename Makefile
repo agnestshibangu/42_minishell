@@ -12,18 +12,26 @@ LIBFT_OBJS := $(patsubst $(LIBFT_DIR)%.c, $(LIBFT_DIR)%.o, $(LIBFT_SRCS))
 
 SRC		= 	src/init.c \
 			src/main.c \
+			src/free.c \
+			src/signal.c \
 			src/builtins/cd_builtins.c \
 			src/builtins/echo_builtins.c \
 			src/builtins/env_builtins.c \
 			src/builtins/exit_builtins.c \
+			src/builtins/export_builtins.c \
 			src/builtins/pwd_builtins.c \
 			src/builtins/unset_builtins.c \
-			src/builtins/export_builtins.c \
+			src/exec/exec_builtins.c \
+			src/exec/exec_env.c \
+			src/exec/exec_pipe.c \
+			src/exec/exec_pipex.c \
+			src/exec/exec_redir.c \
+			src/exec/exec_utils.c \
+			src/parsing/parsing.c \
 			src/pipex/pipex.c \
 			src/pipex/gnl_function.c \
 			src/pipex/gnl_utils.c \
 			src/pipex/gnl.c \
-			src/free.c \
 	
 	
 OBJ		= $(SRC:.c=.o)
