@@ -24,7 +24,10 @@ SRC		= 	src/init.c \
 			src/pipex/gnl_function.c \
 			src/pipex/gnl_utils.c \
 			src/pipex/gnl.c \
+			src/run/run_builtins.c \
+			src/run/run_exec.c \
 			src/free.c \
+
 	
 	
 OBJ		= $(SRC:.c=.o)

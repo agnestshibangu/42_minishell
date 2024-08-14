@@ -1,20 +1,6 @@
 #include "../minishell.h"
 
-// int	main(int ac, char **av, char **envp)
-// {
-// 	t_tabenv tabenv;
-// 	// (void)ac;
-// 	// (void)av;
 
-// 	if (!init_env_tab(&tabenv, envp))
-// 	{
-// 		printf("oui\n");
-// 		fflush(stdout);
-// 		handle_pipex(av, ac, &tabenv);
-// 	}
-// 	free_minishell(&tabenv);
-// 	return (0);
-// }
 
 void	new_routine(int signal)
 {
@@ -38,9 +24,43 @@ void	signal_handler(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void general_exec(char *command, t_tabenv *tabenv)
+char 	*isolating_first_argument(char *str)
 {
-	is_builtin(command, tabenv);
+	char *name = NULL;
+    int i;
+    int y;
+    int name_len;
+
+    i = 0;
+    y = 0;
+    name_len = 0;
+
+    // isolating argument
+    while (str[i] != ' ')
+        i++;
+    i = i + 1;
+    
+  
+    while (str[i + name_len])
+        name_len++;
+
+    name = (char *)malloc(sizeof(char) * (name_len + 1));
+    if (!name)
+        printf("Memory allocation error\n");
+    while (str[i])
+	{
+		name[y++] = str[i++];
+	}
+	return (name);
+}
+
+void general_exec(char *command, t_tabenv *tabenv)
+{    
+	// first_argument = isolating_first_argument(command);
+	printf("%s", command );
+	//is_builtin(command, tabenv);
+	// run_exec(t_node *exec_node, tabenv);
+	run_exec(command, tabenv);
 }
 
 void 	show_prompt(t_tabenv *tabenv)
@@ -61,8 +81,7 @@ void 	show_prompt(t_tabenv *tabenv)
 		{
 			add_history(command);
 			general_exec(command, tabenv);
-		} 
-		
+		}	
 	}
 }
 

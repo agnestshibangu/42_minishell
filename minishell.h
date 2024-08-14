@@ -25,6 +25,13 @@ typedef struct s_tabenv
     char **env_vars;
 }              t_tabenv;
 
+typedef struct s_exec_node
+{
+	int		type;
+    char    *command;
+}	t_exec_node;
+
+
 
 // init
 int init_env_tab(t_tabenv *tabenv, char **envp);
@@ -33,7 +40,7 @@ int init_env_tab(t_tabenv *tabenv, char **envp);
 
 
 // run builtins
-void is_builtin(char *command, t_tabenv *tabenv);
+void run_builtin(char *command, t_tabenv *tabenv);
 
 // echo
 void	ft_echo(char *str, int out);
@@ -49,6 +56,12 @@ char	*ft_env(t_tabenv *tabenv);
 
 // unset
 int ft_unset(const char *str, t_tabenv *tabenv);
+
+// run exec
+
+void    run_exec(char *command, t_tabenv *tabenv);
+// void    run_exec(t_exec_node *exec_node, t_tabenv *tabenv)
+void    fill_struct(char *command, t_exec_node *exec_node);
 
 // pipex bonus
 void	exec(char *cmd, char **env);
