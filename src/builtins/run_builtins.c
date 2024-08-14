@@ -27,6 +27,4 @@ void is_builtin(char *command, t_tabenv *tabenv)
         ft_unset(command, tabenv);
     }
     
-    
-       
 }

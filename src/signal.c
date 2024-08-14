@@ -1,30 +1,64 @@
-// #include "../minishell.h"
-// # include <readline/readline.h>
-// # include <readline/history.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signal.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/11 11:11:28 by thsion            #+#    #+#             */
+/*   Updated: 2024/08/14 20:56:05 by agtshiba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// void signal_handler(void);
-// void new_routine(int signal);
+#include "../minishell.h"
 
+int	g_status;
 
+void signal_handler(void)
+{
+    struct sigaction sa;
 
-// void signal_handler(void)
-// {
-//     struct sigaction sa;
+    sa.sa_flags = SA_RESTART;
+    sa.sa_handler = new_routine;
+    sigemptyset(&sa.sa_mask);
+    sigaction(SIGINT, &sa, NULL);
+    signal(SIGQUIT, SIG_IGN);
+}
 
-//     sa.sa_flags = SA_RESTART;
-//     sa.sa_handler = new_routine;
-//     sigemptyset(&sa.sa_mask);
-//     sigaction(SIGINT, &sa, NULL);
-//     signal(SIGQUIT, SIG_IGN);
-// }
+void new_routine(int signal)
+{
+    if (signal == SIGINT && g_status != -1)
+    {
+        g_status = 130;
+        printf("\n");
+        rl_replace_line("", 0);
+        rl_on_new_line();
+        rl_redisplay();
+    }
+}
 
-// void new_routine(int signal)
-// {
-//     if (signal == SIGINT)
-//     {
-//         printf("\n");
-//         rl_replace_line("", 0);
-//         rl_on_new_line();
-//         rl_redisplay(); // Redisplay the prompt on a new line
-//     }
-// }
+void	heredoc_signal(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_flags = SA_RESTART;
+	sa.sa_handler = heredoc_signal_handler;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGINT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	heredoc_signal_handler(int signal)
+{
+	if (signal == SIGINT)
+	{
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+		printf("\n");
+		unlink(".here_doc");
+		close(STDIN_FILENO);
+		g_status = 130;
+		exit (g_status);
+	}
+}

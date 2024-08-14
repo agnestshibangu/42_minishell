@@ -40,8 +40,7 @@ int init_env_tab(t_tabenv *tabenv, char **envp);
 
 
 // run builtins
-void run_builtin(char *command, t_tabenv *tabenv);
-
+int run_builtin(char *command, t_tabenv *tabenv);
 // echo
 void	ft_echo(char *str, int out);
 // cd
@@ -53,12 +52,9 @@ int ft_export(char *str, t_tabenv *tabenv);
 // exit
 void ft_exit(void);
 char	*ft_env(t_tabenv *tabenv);
-
 // unset
 int ft_unset(const char *str, t_tabenv *tabenv);
-
 // run exec
-
 void    run_exec(char *command, t_tabenv *tabenv);
 // void    run_exec(t_exec_node *exec_node, t_tabenv *tabenv)
 void    fill_struct(char *command, t_exec_node *exec_node);
@@ -93,8 +89,10 @@ void	free_storage(char *storage);
 int     free_minishell(t_tabenv *tabenv); // free the minishell at the very end
 
 // signals
-// void signal_handler(void);
-// void new_routine(int signal);
+void signal_handler(void);
+void new_routine(int signal);
+void	heredoc_signal(void);
+void	heredoc_signal_handler(int signal);
 
 
 #endif 

@@ -134,9 +134,13 @@ char	*get_every_path(char **env, char *cmd)
 	{
 		path_part = ft_strjoin(allpath[i], "/");
 		exec = ft_strjoin(path_part, cmd);
+	
 		free(path_part);
 		if (access(exec, F_OK | X_OK) == 0)
+		{
+			printf("%s\n\n\n", exec);
 			return (exec);
+		}
 		free(exec);
 		i++;
 	}

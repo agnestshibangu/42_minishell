@@ -27,9 +27,8 @@ SRC		= 	src/init.c \
 			src/run/run_builtins.c \
 			src/run/run_exec.c \
 			src/free.c \
+			src/signal.c \
 
-	
-	
 OBJ		= $(SRC:.c=.o)
 
 all : $(NAME)

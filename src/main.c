@@ -1,28 +1,14 @@
 #include "../minishell.h"
 
 
-
-void	new_routine(int signal)
+// EXEMPLE DE PROCESSUS D'EXECUTION :
+/* void	general_exec(input, data)
 {
-	if (signal == SIGINT)
-	{
-		printf("\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();// implementer systeme pour avoir une nouvelle ligne vide
-	}
-}
- 
-void	signal_handler(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_flags = SA_RESTART;
-	sa.sa_handler = new_routine;
-	sigemptyset(&sa.sa_mask);
-	sigaction(SIGINT, &sa, NULL);
-	signal(SIGQUIT, SIG_IGN);
-}
+	if(builtin)
+		-----> exec_bulting.c
+	if (pipe)
+		------ > exec_pipe.c
+} */
 
 char 	*isolating_first_argument(char *str)
 {
@@ -57,10 +43,8 @@ char 	*isolating_first_argument(char *str)
 void general_exec(char *command, t_tabenv *tabenv)
 {    
 	// first_argument = isolating_first_argument(command);
-	printf("%s", command );
-	//is_builtin(command, tabenv);
-	// run_exec(t_node *exec_node, tabenv);
-	run_exec(command, tabenv);
+	if (!run_builtin(command, tabenv))
+		run_exec(command, tabenv);
 }
 
 void 	show_prompt(t_tabenv *tabenv)
@@ -81,7 +65,8 @@ void 	show_prompt(t_tabenv *tabenv)
 		{
 			add_history(command);
 			general_exec(command, tabenv);
-		}	
+		}
+		free(command);
 	}
 }
 
