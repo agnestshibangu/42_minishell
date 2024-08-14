@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:12:14 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/11 16:40:16 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/14 20:32:24 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,4 @@ void is_builtin(char *command, t_tabenv *tabenv)
     {
         ft_unset(command, tabenv);
     }
-
 }

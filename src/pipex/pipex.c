@@ -8,15 +8,14 @@
 # include "../../minishell.h"
 
 //int	exec(char *cmd, char **env)
+
 void	exec(char *cmd, char **env)
 {
 	char	*path;
 	char	**argv;
 
 	argv = ft_split(cmd, ' ');
-	path = get_every_path(env, argv[0]);
-	printf("coucou\n");
-	fflush(stdout);
+	path = get_every_path(env, cmd);
 	if (execve(path, argv, env) == -1)
 	{
 		// return (0);
@@ -165,8 +164,6 @@ void	finish_pipe(char **av, int ac, char **env)
 	fd_out = open_file(av[ac - 1], 1);
 	dup2(fd_out, 1);
 	close(fd_out);
-	printf("coucoul\n");
-	fflush(stdout);
 	exec(av[ac - 2], env);
 }
 

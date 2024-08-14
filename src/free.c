@@ -16,8 +16,7 @@ int     free_minishell(t_tabenv *tabenv)
 {   
     int	nbr_of_lines;
     int i;
-
-
+	
 	nbr_of_lines = 0;
 	if (tabenv == NULL)
 		return (1);

@@ -6,15 +6,15 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:11:36 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/11 16:36:09 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/14 20:31:28 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	g_status;
-// EXEMPLE DE PROCESSUS D'EXECUTION :
-/* void	general_exec(input, data)
+int		g_status;
+
+/* void	new_routine(int signal)
 {
 	if(builtin)
 		-----> exec_bulting.c

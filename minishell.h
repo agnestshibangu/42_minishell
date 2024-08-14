@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:12:53 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/11 16:38:47 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/14 20:33:35 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,13 @@ typedef struct s_tabenv
 {
 	char **env_vars;
 }              t_tabenv;
+
+typedef struct s_exec_node
+{
+	int		type;
+    char    *command;
+}	t_exec_node;
+
 
 
 // init.c
