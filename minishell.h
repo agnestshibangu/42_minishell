@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:12:53 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/14 20:33:35 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/15 11:31:04 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ void	heredoc_signal_handler(int signal);
 // free.c
 int		free_minishell(t_tabenv *tabenv); // free the minishell at the very end
 
-/*				BUILTINS				*/
-
-// echo_builtins.c
+// run builtins
+int run_builtin(char *command, t_tabenv *tabenv);
+// echo
 void	ft_echo(char *str, int out);
 
 // cd_builtins.c
@@ -80,12 +80,12 @@ int		ft_export(char *name, t_tabenv *tabenv);
 void 	ft_exit();
 
 char	*ft_env(t_tabenv *tabenv);
-
-// unset_builtins.c
+// unset
 int ft_unset(const char *str, t_tabenv *tabenv);
-
-// run builtins
-void is_builtin(char *command, t_tabenv *tabenv);
+// run exec
+void    run_exec(char *command, t_tabenv *tabenv);
+// void    run_exec(t_exec_node *exec_node, t_tabenv *tabenv)
+void    fill_struct(char *command, t_exec_node *exec_node);
 
 /*				PIPEX & GNL				*/
 // pipex bonus
@@ -113,7 +113,14 @@ void	free_backup(char *backup);
 char	*my_extract(char *line);
 void	free_storage(char *storage);
 
-/*				LIBFT				*/
+// free
+int     free_minishell(t_tabenv *tabenv); // free the minishell at the very end
+
+// signals
+void signal_handler(void);
+void new_routine(int signal);
+void	heredoc_signal(void);
+void	heredoc_signal_handler(int signal);
 
 int		ft_atoi(char *str);
 int		ft_isalnum(int c);

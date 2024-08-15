@@ -5,10 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/11 11:12:10 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/14 20:31:42 by agtshiba         ###   ########.fr       */
+/*   Created: 2024/08/15 11:21:32 by agtshiba          #+#    #+#             */
+/*   Updated: 2024/08/15 11:31:19 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../minishell.h"
 
 #include "../../minishell.h"
 

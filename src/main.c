@@ -6,15 +6,14 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:11:36 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/14 20:31:28 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/15 11:30:31 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		g_status;
-
-/* void	new_routine(int signal)
+// EXEMPLE DE PROCESSUS D'EXECUTION :
+/* void	general_exec(input, data)
 {
 	if(builtin)
 		-----> exec_bulting.c
@@ -22,9 +21,12 @@ int		g_status;
 		------ > exec_pipe.c
 } */
 
+
 void general_exec(char *command, t_tabenv *tabenv)
-{
-	is_builtin(command, tabenv);
+{    
+	// first_argument = isolating_first_argument(command);
+	if (!run_builtin(command, tabenv))
+		run_exec(command, tabenv);
 }
 
 void 	show_prompt(t_tabenv *tabenv)
@@ -46,8 +48,8 @@ void 	show_prompt(t_tabenv *tabenv)
 		{
 			add_history(command);
 			general_exec(command, tabenv);
-		} 
-		// free(command);
+		}
+		free(command);
 	}
 }
 
