@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_builtins.c                                  :+:      :+:    :+:   */
+/*   run_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/15 11:21:32 by agtshiba          #+#    #+#             */
-/*   Updated: 2024/08/15 11:21:33 by agtshiba         ###   ########.fr       */
+/*   Created: 2024/08/15 11:20:57 by agtshiba          #+#    #+#             */
+/*   Updated: 2024/08/15 11:20:58 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-// replace ("") puis newline puis display 
-
-int ft_export(char *str, t_tabenv *tabenv)
+char 	*isolating_first_argument(char *str)
 {
-    char *name = NULL;
+	char *name = NULL;
     int i;
     int y;
     int name_len;
@@ -36,33 +34,10 @@ int ft_export(char *str, t_tabenv *tabenv)
 
     name = (char *)malloc(sizeof(char) * (name_len + 1));
     if (!name)
-    {
         printf("Memory allocation error\n");
-        return (1);
-    }    
-
     while (str[i])
-        name[y++] = str[i++];
-
-    while (tabenv->env_vars[i] != NULL)
-        i++;
-    char **new_env_vars = malloc(sizeof(char *) * (i + 2));
-    if (!new_env_vars)
-    {
-        printf("error");
-        return (1);
-    }
-    i = 0;
-    while (tabenv->env_vars[i])
-    {
-        new_env_vars[i] = tabenv->env_vars[i];
-        i++;
-    }
-    new_env_vars[i] = strdup(name);
-    new_env_vars[i + 1] = NULL;
-    tabenv->env_vars = new_env_vars;
-    free(name);
-    free(new_env_vars);
-    return (1);
+	{
+		name[y++] = str[i++];
+	}
+	return (name);
 }
-

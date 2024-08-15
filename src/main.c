@@ -1,5 +1,16 @@
-#include "../minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/15 11:22:38 by agtshiba          #+#    #+#             */
+/*   Updated: 2024/08/15 11:22:39 by agtshiba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "../minishell.h"
 
 // EXEMPLE DE PROCESSUS D'EXECUTION :
 /* void	general_exec(input, data)
@@ -10,35 +21,6 @@
 		------ > exec_pipe.c
 } */
 
-char 	*isolating_first_argument(char *str)
-{
-	char *name = NULL;
-    int i;
-    int y;
-    int name_len;
-
-    i = 0;
-    y = 0;
-    name_len = 0;
-
-    // isolating argument
-    while (str[i] != ' ')
-        i++;
-    i = i + 1;
-    
-  
-    while (str[i + name_len])
-        name_len++;
-
-    name = (char *)malloc(sizeof(char) * (name_len + 1));
-    if (!name)
-        printf("Memory allocation error\n");
-    while (str[i])
-	{
-		name[y++] = str[i++];
-	}
-	return (name);
-}
 
 void general_exec(char *command, t_tabenv *tabenv)
 {    

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/15 11:22:19 by agtshiba          #+#    #+#             */
+/*   Updated: 2024/08/15 11:22:20 by agtshiba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 # include <stdio.h>
 # include <unistd.h>
@@ -137,10 +149,7 @@ char	*get_every_path(char **env, char *cmd)
 	
 		free(path_part);
 		if (access(exec, F_OK | X_OK) == 0)
-		{
-			printf("%s\n\n\n", exec);
 			return (exec);
-		}
 		free(exec);
 		i++;
 	}
