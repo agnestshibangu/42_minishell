@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 11:22:19 by agtshiba          #+#    #+#             */
-/*   Updated: 2024/08/15 11:22:20 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/15 15:07:28 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,12 +133,39 @@ char	*find_path_variable_function(char **env)
 	return (NULL);
 }
 
-char	*get_every_path(char **env, char *cmd)
+// char	*get_every_path(char **env, char *cmd)
+// {
+// 	char	**allpath;
+// 	char	*path_part;
+// 	char	*exec;
+// 	int		i;
+
+// 	allpath = ft_split(find_path_variable_function(env), ':');
+// 	i = 0;
+// 	while (allpath[i])
+// 	{
+// 		path_part = ft_strjoin(allpath[i], "/");
+// 		exec = ft_strjoin(path_part, cmd);
+// 		free(path_part);
+// 		if (access(exec, F_OK | X_OK) == 0)
+// 		{
+// 			printf("%s", exec);
+// 			return (exec);
+// 		}
+// 		free(exec);
+// 		i++;
+// 	}
+// 	my_free_tab(allpath);
+// 	return (NULL);
+// }
+
+
+char *get_every_path(char **env, char *cmd)
 {
-	char	**allpath;
-	char	*path_part;
-	char	*exec;
-	int		i;
+	char **allpath;
+	char *path_part;
+	char *exec;
+	int i;
 
 	allpath = ft_split(find_path_variable_function(env), ':');
 	i = 0;
@@ -146,10 +173,12 @@ char	*get_every_path(char **env, char *cmd)
 	{
 		path_part = ft_strjoin(allpath[i], "/");
 		exec = ft_strjoin(path_part, cmd);
-	
 		free(path_part);
 		if (access(exec, F_OK | X_OK) == 0)
+		{
+			my_free_tab(allpath);
 			return (exec);
+		}
 		free(exec);
 		i++;
 	}

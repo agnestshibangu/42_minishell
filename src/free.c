@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:11:47 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/15 11:29:57 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/15 15:00:31 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ int     free_minishell(t_tabenv *tabenv)
 		}
 		free(tabenv->env_vars);
 	}
-    printf("everything has been freed !");
+    printf("everything has been freed !\n");
     return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:12:53 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/15 11:31:04 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/15 17:45:04 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,10 @@ char	*ft_env(t_tabenv *tabenv);
 int ft_unset(const char *str, t_tabenv *tabenv);
 // run exec
 void    run_exec(char *command, t_tabenv *tabenv);
+void run_path(char **argv, char **path);
+void    run_command(char **path, char **argv,  t_tabenv *tabenv);
+// void    run_path(char **argv, char *path);
+// void    run_exec_path(char *cmd,  t_tabenv *tabenv);
 // void    run_exec(t_exec_node *exec_node, t_tabenv *tabenv)
 void    fill_struct(char *command, t_exec_node *exec_node);
 
