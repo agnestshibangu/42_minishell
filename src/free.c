@@ -6,7 +6,7 @@
 /*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:11:47 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/11 11:11:48 by thsion           ###   ########.fr       */
+/*   Updated: 2024/08/11 15:55:48 by thsion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,18 @@ int     free_minishell(t_tabenv *tabenv)
 	}
     printf("everything has been freed !");
     return (0);
+}
+
+void	free_tab(char **tab)
+{
+	int i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab[i]);
+	free(tab);
 }

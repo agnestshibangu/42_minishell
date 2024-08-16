@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_builtins.c                                    :+:      :+:    :+:   */
+/*   nodes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/11 11:12:06 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/13 10:30:06 by thsion           ###   ########.fr       */
+/*   Created: 2024/08/13 13:49:36 by thsion            #+#    #+#             */
+/*   Updated: 2024/08/15 17:03:50 by thsion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void handle_exit(char *input)
+t_node	*create_exec_node(void)
 {
-    if (ft_strncmp(input, "exit", 4) == 0) {
-        printf("Exiting shell...\n");
-        exit(0);  
-    }
+	t_exec_node *exec_node;
+
+	exec_node = malloc(sizeof(*exec_node));
+	if (!exec_node)
+		return (NULL);
+	ft_memset(&exec_node, 0, (sizeof(*exec_node)));
+	exec_node->type = EXEC;
+	return ((t_node *)exec_node);
 }
+

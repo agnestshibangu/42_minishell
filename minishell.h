@@ -6,7 +6,7 @@
 /*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:12:53 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/11 13:38:27 by thsion           ###   ########.fr       */
+/*   Updated: 2024/08/15 17:42:23 by thsion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,30 @@
 
 extern int	g_status;
 
+typedef enum e_type
+{
+	EXEC,
+	PIPE,
+	REDIR,
+}			t_type;
+
+typedef struct s_node
+{
+	int	type;
+}				t_node;
+
+typedef struct s_exec_node
+{
+	int		type;
+	bool	is_builtin;
+	char	*args[100];
+	char	*end_args[100];
+}				t_exec_node;
+
 typedef struct s_tabenv
 {
 	char **env_vars;
+	char *start_input;
 }              t_tabenv;
 
 
@@ -49,6 +70,25 @@ void	heredoc_signal_handler(int signal);
 
 // free.c
 int		free_minishell(t_tabenv *tabenv); // free the minishell at the very end
+void	free_tab(char **tab);
+
+/*              PARSING             */
+
+// parsing.c
+bool	check_empty_input(char *input);
+t_node	*starting_tree(char *input, t_tabenv *tabenv);
+t_node	*parse_exec(char **start_scan, char *end_input, t_tabenv *tabenv);
+t_node	*put_endline(t_node *tree);
+void	fill_node(t_exec_node *exec_node, char *startoken, char *endoken,
+		int *i);
+
+// scanning.c
+int		getoken(char **start_scan, char *end_input, char **startoken,
+		char **endoken);
+bool	is_whitespace(char c);
+
+// nodes.c
+t_node	*create_exec_node(void);
 
 /*				BUILTINS				*/
 
@@ -60,18 +100,19 @@ int		change_directory(char *str);
 
 // pwd_builtins.c
 int		ft_pwd(void);
+
 // export_builtins.c
 int		export_var(char *name, t_tabenv *tabenv);
+
 // unset_builtins.c
 
 
 // env_builtins.c
-
+char	*print_env(t_tabenv *tabenv);
 
 // exit_builtins.c
 void	handle_exit(char *input);
 
-char	*print_env(t_tabenv *tabenv);
 
 // unset_builtins.c
 int		unset_var(const char *name, t_tabenv *tabenv);

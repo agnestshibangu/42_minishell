@@ -6,7 +6,7 @@
 /*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:11:36 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/11 12:54:48 by thsion           ###   ########.fr       */
+/*   Updated: 2024/08/15 17:51:39 by thsion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,24 @@ int	g_status;
 		------ > exec_pipe.c
 } */
 
-void 	show_prompt()
+void 	show_prompt(t_tabenv *tabenv)
 {
-	char *command;
+	char *input;
+    t_node  *final_node;
 
+    (void)tabenv;
 	while (1)
 	{
 		signal_handler();
-		command = readline("minishell$ ");
+		input = readline("minishell$ ");
 
 		// securite
-		if (command == NULL)
+		if (check_empty_input(input))
 		{
-			printf("exit\n");
-			break;
-		}
-		if (command)
-		{
-			add_history(command);
-			echo(command, 1);
+            //clearing_input(input, tabenv);
+			add_history(input);
+            final_node = starting_tree(input, tabenv); // ce truc return l'arbre a executer
+            printf("%d\n", final_node->type);
 		} 
 		// free(command);
 	}
@@ -49,23 +48,25 @@ void 	show_prompt()
 int main(int ac, char **av, char **envp)
 {
 	t_tabenv tabenv;
-	
-	(void)ac;
-	(void)av;
 
+	(void)av;
+	if (ac > 1)
+		printf("🚫 Minishell doesn't take arguments. Still launching Minishell ... 🚫");
+	// (1) INIT ENV AND PARAM
+	init_env_tab(&tabenv, envp);
+	if (!tabenv.env_vars)
+		return (1);
 	// command = "blabla";
 	// char *name;
 	// name = "allo=4";
 	// str = "~";
 
-	// (1) BOOL PARSING
-	// (2) INPUT CLEAN
+	// (2) BOOL PARSING
+	// (3) INPUT CLEAN
 	// -------------------- 
-	// (3) INIT ENV AND PARAM
-	init_env_tab(&tabenv, envp);
-	// (3) SET UP SIGNALS (4) SHOW PROMPT
-	show_prompt();
-	// (5) FREE AND CLEAN
+	// (4) SET UP SIGNALS (4) SHOW PROMPT
+	show_prompt(&tabenv);
+	// (6) FREE AND CLEAN
 	free_minishell(&tabenv);
 	return (0);
 }
