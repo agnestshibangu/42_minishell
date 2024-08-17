@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:11:36 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/15 15:08:18 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/17 15:12:52 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,18 @@
 } */
 
 
+
 void general_exec(char *command, t_tabenv *tabenv)
 {    
 	// first_argument = isolating_first_argument(command);
+	//t_exec_node exec_node;
+	
+	//init_exec_node(&exec_node, command);
+	// if (run_builtin(command, tabenv))
+	// 	printf("je suis un builtin");
+	
 	if (!run_builtin(command, tabenv))
-		run_exec(command, tabenv);
+	 	run_exec(command, tabenv);
 }
 
 void 	show_prompt(t_tabenv *tabenv)
@@ -44,11 +51,16 @@ void 	show_prompt(t_tabenv *tabenv)
 			printf("exit\n");
 			break;
 		}
+		// if (is_pipe(command))
+		// {
+			
+		// }
 		if (command)
 		{
 			add_history(command);
 			general_exec(command, tabenv);
 		}
+		
 		free(command);
 	}
 }
@@ -57,6 +69,8 @@ int main(int ac, char **av, char **envp)
 {
 	t_tabenv tabenv;
 	
+ 	
+	// (void)envp;
 	(void)ac;
 	(void)av;
 
@@ -70,9 +84,10 @@ int main(int ac, char **av, char **envp)
 	// -------------------- 
 	// (3) INIT ENV AND PARAM
 	init_env_tab(&tabenv, envp);
+	// init_exec_node(&exec_node, av, ac);
 	// (3) SET UP SIGNALS (4) SHOW PROMPT
 	show_prompt(&tabenv);
 	// (5) FREE AND CLEAN
-	free_minishell(&tabenv);
+	// free_minishell(&tabenv);
 	return (0);
 }

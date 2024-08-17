@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 11:21:07 by agtshiba          #+#    #+#             */
-/*   Updated: 2024/08/15 18:09:37 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/16 11:33:44 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,14 @@ void run_path(char **argv, char **path)
         *path = argv[0];  // If the command is a valid path, use it directly
     } 
     else 
-    {
-        printf("Invalid path provided: %s\n", argv[0]);
         my_free_tab(argv);
-        exit(EXIT_FAILURE);  // Exit the child process
-    }
 }
 
 void run_command(char **path, char **argv, t_tabenv *tabenv)
 {
     *path = get_every_path(tabenv->env_vars, argv[0]);
     if (!*path) 
-    {
-        printf("command not found\n");
         my_free_tab(argv);
-        exit(EXIT_FAILURE);
-    }
 }
 
 void	run_exec(char *cmd, t_tabenv *tabenv)
@@ -65,7 +57,6 @@ void	run_exec(char *cmd, t_tabenv *tabenv)
                 free(path); 
             }
             my_free_tab(argv);
-            exit(EXIT_FAILURE); 
         }
     } 
     else {

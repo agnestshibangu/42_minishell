@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:12:53 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/15 17:45:04 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/17 15:07:45 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,26 @@ typedef struct s_tabenv
 	char **env_vars;
 }              t_tabenv;
 
+// typedef struct s_exec_node
+// {
+// 	int		type;
+//     char    *command;
+// }	t_exec_node;
+
+
 typedef struct s_exec_node
 {
 	int		type;
-    char    *command;
-}	t_exec_node;
-
-
+	bool	is_builtin;
+	char	*command;
+	char	**args;
+	// char	*end_args[100];
+}				t_exec_node;
 
 // init.c
 int		init_env_tab(t_tabenv *tabenv, char **envp);
+// int		init_exec_node(t_exec_node *exec_node, char **av, int ac);
+int		init_exec_node(t_exec_node *exec_node, char *command);
 
 // signal.c
 void	signal_handler(void);
@@ -61,19 +71,22 @@ int		free_minishell(t_tabenv *tabenv); // free the minishell at the very end
 int run_builtin(char *command, t_tabenv *tabenv);
 // echo
 void	ft_echo(char *str, int out);
-
 // cd_builtins.c
 int		ft_cd(char *str);
-
 // pwd_builtins.c
 int		ft_pwd(void);
 // export_builtins.c
 int		ft_export(char *name, t_tabenv *tabenv);
+// shell level
+// int     update_shell_level(char *command, t_tabenv *tabenv);
+int     ft_update_shell_level(t_tabenv *tabenv);
 // unset_builtins.c
-
 
 // env_builtins.c
 
+
+
+char 	*isolating_first_argument(char *str);
 
 // exit_builtins.c
 // void	ft_exit(char *input);
