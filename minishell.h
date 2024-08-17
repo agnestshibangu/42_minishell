@@ -56,6 +56,10 @@ char	*ft_env(t_tabenv *tabenv);
 int ft_unset(const char *str, t_tabenv *tabenv);
 // run exec
 void    run_exec(char *command, t_tabenv *tabenv);
+// change shell level
+int ft_update_shell_level(t_tabenv *tabenv)
+
+
 // void    run_exec(t_exec_node *exec_node, t_tabenv *tabenv)
 void    fill_struct(char *command, t_exec_node *exec_node);
 
