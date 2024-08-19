@@ -6,9 +6,11 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 13:51:52 by agtshiba          #+#    #+#             */
-/*   Updated: 2024/08/17 17:23:41 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/17 17:46:40 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// a declancher a pres une copie de l'env 
 
 #include "../../minishell.h"
 
