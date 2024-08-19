@@ -6,7 +6,7 @@
 /*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 13:56:40 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/16 11:26:53 by thsion           ###   ########.fr       */
+/*   Updated: 2024/08/19 16:14:20 by thsion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,20 @@ t_node	*starting_tree(char *input, t_tabenv *tabenv)
 	char	*end_input;
 	char	*tmp;
 
-	tmp = input;
+	tmp = input;                                    // creation copie de l'input
 	if (!tmp)
 		return (NULL);
-	tabenv->start_input = tmp;
-	end_input = tmp + ft_strlen(tmp);
-    printf("%s\n", tmp);
-	tree = parse_exec(&tmp, end_input, tabenv);
+	tabenv->start_input = tmp;                      // stockage dans data
+	end_input = tmp + ft_strlen(tmp);               // pointeur sur la fin de l'input (utile pour token)
+	tree = parse_exec(&tmp, end_input, tabenv);     // allez on goooooo
 	if (!tree)
 	{
 		free(input);
-		free(tabenv->start_input);
+		free(tabenv->start_input);                  // gestion erreur si tree vide
 		return (NULL);
 	}
-	tree = put_endline(tree);
-	return (tree);
+	tree = put_endline(tree);                       // mise en place des '\0' entre chaque commandes
+	return (tree);                                  // return dans le main et ca part en exec
 }
 
 t_node	*parse_exec(char **start_scan, char *end_input, t_tabenv *tabenv)
@@ -64,12 +63,12 @@ t_node	*parse_exec(char **start_scan, char *end_input, t_tabenv *tabenv)
 
     (void)tabenv;
 	i = 0;
-	node = create_exec_node();
-	exec_node = (t_exec_node *)node;
-	getoken(start_scan, end_input, &startoken, &endoken);
-	fill_node(exec_node, startoken, endoken, &i);
-	if (i >= 100)
-		return (printf("FUCK"), NULL);
+	node = create_exec_node();                              //initialisation de la node exec
+	exec_node = (t_exec_node *)node;                        // cast de la node pour la rendre en exec
+    getoken(start_scan, end_input, &startoken, &endoken);   // on chope les commandes et les aruments
+	fill_node(exec_node, startoken, endoken, &i);           // on les met dans la node
+	if (i >= 100)                                           // gestion si on depasse la limite !!!!
+		return (printf("FUCK"), NULL);                      // (pas ouf le "FUCK") a changer !
 	return (node);
 }
 
@@ -97,4 +96,15 @@ void	fill_node(t_exec_node *exec_node, char *startoken, char *endoken,
 	exec_node->args[*i] = startoken;
 	exec_node->end_args[*i] = endoken;
 	(*i)++;
+}
+
+int	peek(char **start_scan, char *end_input, char *target)
+{
+	char	*str;
+
+	str = *start_scan;
+	while (str < end_input && is_whitespace(*str))
+		str++;
+	*start_scan = str;
+	return (*str && ft_strchr(target, *str));
 }

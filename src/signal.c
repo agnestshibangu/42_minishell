@@ -6,36 +6,36 @@
 /*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:11:28 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/11 13:43:31 by thsion           ###   ########.fr       */
+/*   Updated: 2024/08/18 11:41:15 by thsion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void signal_handler(void)
+void	signal_handler(void)
 {
-    struct sigaction sa;
+	struct sigaction sa;
 
-    sa.sa_flags = SA_RESTART;
-    sa.sa_handler = new_routine;
-    sigemptyset(&sa.sa_mask);
-    sigaction(SIGINT, &sa, NULL);
-    signal(SIGQUIT, SIG_IGN);
+	sa.sa_flags = SA_RESTART;
+	sa.sa_handler = new_routine;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGINT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
 }
 
-void new_routine(int signal)
+void	new_routine(int signal)
 {
-    if (signal == SIGINT && g_status != -1)
-    {
-        g_status = 130;
-        printf("\n");
-        rl_replace_line("", 0);
-        rl_on_new_line();
-        rl_redisplay();
-    }
+	if (signal == SIGINT && g_status != -1)
+	{
+		g_status = 130;
+		printf("\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }
 
-void	heredoc_signal(void)
+/* void	heredoc_signal(void)
 {
 	struct sigaction	sa;
 
@@ -44,9 +44,9 @@ void	heredoc_signal(void)
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
-}
+} */
 
-void	heredoc_signal_handler(int signal)
+/* void	heredoc_signal_handler(int signal)
 {
 	if (signal == SIGINT)
 	{
@@ -59,4 +59,4 @@ void	heredoc_signal_handler(int signal)
 		g_status = 130;
 		exit (g_status);
 	}
-}
+} */

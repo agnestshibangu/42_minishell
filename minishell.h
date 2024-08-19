@@ -6,7 +6,7 @@
 /*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:12:53 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/15 17:42:23 by thsion           ###   ########.fr       */
+/*   Updated: 2024/08/19 16:03:56 by thsion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,15 @@ typedef enum e_type
 	REDIR,
 }			t_type;
 
+typedef enum e_redir
+{
+	HEREDOC,
+	APPEND,
+	IN_REDIR,
+	OUT_REDIR,
+}
+			t_redir;
+
 typedef struct s_node
 {
 	int	type;
@@ -51,6 +60,24 @@ typedef struct s_exec_node
 	char	*args[100];
 	char	*end_args[100];
 }				t_exec_node;
+
+typedef struct s_pipe_node
+{
+	int		type;
+	t_node	*left;
+	t_node	*right;
+}				t_pipe_node;
+
+typedef struct s_redir_node
+{
+	int		type;
+	int		r_type;
+	t_node	*cmd;
+	char	*file;
+	char	*end_file;
+	int		mode;
+	int		fd;
+}				t_redir_node;
 
 typedef struct s_tabenv
 {
@@ -65,8 +92,8 @@ int		init_env_tab(t_tabenv *tabenv, char **envp);
 // signal.c
 void	signal_handler(void);
 void	new_routine(int signal);
-void	heredoc_signal(void);
-void	heredoc_signal_handler(int signal);
+//void	heredoc_signal(void);
+//void	heredoc_signal_handler(int signal);
 
 // free.c
 int		free_minishell(t_tabenv *tabenv); // free the minishell at the very end
@@ -85,10 +112,20 @@ void	fill_node(t_exec_node *exec_node, char *startoken, char *endoken,
 // scanning.c
 int		getoken(char **start_scan, char *end_input, char **startoken,
 		char **endoken);
-bool	is_whitespace(char c);
+int		quoted_token(char **input, char **startoken, char **endoken);
+int		fill_type(char **input, int type, char *end_input);
+int     fill_redir(char **str, int type);
 
 // nodes.c
 t_node	*create_exec_node(void);
+t_node	*create_pipe_node(t_node *left, t_node *right);
+t_node	*create_redir_node(int token_type, t_node *cmd, char *start_file,
+		char *end_file);
+
+// parsing_utils.c
+bool	is_quotes(char c);
+bool	is_symbol(char c);
+bool	is_space(char c);
 
 /*				BUILTINS				*/
 
