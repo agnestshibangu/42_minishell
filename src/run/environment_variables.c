@@ -5,16 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/17 13:51:52 by agtshiba          #+#    #+#             */
-/*   Updated: 2024/08/17 17:46:40 by agtshiba         ###   ########.fr       */
+/*   Created: 2024/08/17 17:30:02 by agtshiba          #+#    #+#             */
+/*   Updated: 2024/08/19 16:06:51 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// a declancher a pres une copie de l'env 
-
 #include "../../minishell.h"
 
-// int update_shell_level(char *command, t_tabenv *tabenv)
 int ft_update_shell_level(t_tabenv *tabenv)
 {
     

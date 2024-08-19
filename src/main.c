@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:11:36 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/17 15:12:52 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:09:03 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,6 @@ void 	show_prompt(t_tabenv *tabenv)
 			printf("exit\n");
 			break;
 		}
-		// if (is_pipe(command))
-		// {
-			
-		// }
 		if (command)
 		{
 			add_history(command);
