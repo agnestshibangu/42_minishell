@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:12:53 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/19 16:08:45 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/20 15:21:18 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,10 @@ typedef struct s_exec_node
 }				t_exec_node;
 
 // init.c
-int		init_env_tab(t_tabenv *tabenv, char **envp);
+
 // int		init_exec_node(t_exec_node *exec_node, char **av, int ac);
+int init_env_tab(t_tabenv *tabenv, char **envp);
+int copy_env_tab(t_tabenv *tabenv, char **envp);
 int		init_exec_node(t_exec_node *exec_node, char *command);
 
 // signal.c
