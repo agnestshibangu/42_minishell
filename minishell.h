@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:12:53 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/23 17:07:04 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/25 18:36:32 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,22 @@
 # endif
 
 extern int	g_status;
+
+typedef enum e_type
+{
+	EXEC,
+	PIPE,
+	REDIR,
+}			t_type;
+
+typedef enum e_redir
+{
+	HEREDOC,
+	APPEND,
+	IN_REDIR,
+	OUT_REDIR,
+}
+			t_redir;
 
 typedef struct s_tabenv
 {
@@ -63,7 +79,7 @@ typedef struct s_pipe_node
 typedef struct s_redir_node
 {
 	int		type;
-	int		r_type;
+	int		redir_type;
 	t_node	*cmd;
 	char	*file;
 	char	*end_file;
@@ -107,7 +123,8 @@ int     ft_update_shell_level(t_tabenv *tabenv);
 
 // create an exec node 
 // t_node *create_exec_node(int type, bool is_builtin, const char *command, char **args);
-t_node *create_exec_node(int type, bool is_builtin, const char *command);
+// t_node *create_exec_node(int type, bool is_builtin, const char *command);
+t_node *create_exec_node(t_type type, bool is_builtin, const char *command);
 
 char 	*isolating_first_argument(char *str);
 
@@ -128,19 +145,28 @@ void    run_exec_node(t_node *node, t_tabenv *tabenv);
 int ft_update_shell_level(t_tabenv *tabenv);
 // void    run_exec(t_exec_node *exec_node, t_tabenv *tabenv)
 void    fill_struct(char *command, t_exec_node *exec_node);
+void    run(t_node *node, t_tabenv *tabenv);
+void    dup_right(int *fd);
+void   dup_left(int *fd);
 
 // ------------------------------------- PIPEX ----------------------------------
-t_node *create_pipe_node(int type, t_node *left_node, t_node *right_node);
+// t_node *create_pipe_node(int type, t_node *left_node, t_node *right_node);
+t_node *create_pipe_node(t_type type, t_node *left, t_node *right);
 void    run_node_left(t_pipe_node *pipe_node, int *fd, t_tabenv *tabenv);
 int	wait_for_process(pid_t pid1);
 void    run_node_right(t_pipe_node *pipe_node, int *fd, t_tabenv *tabenv);
-void    run(t_node *node, t_tabenv *tabenv);
+
 int		ft_fork(void);
 void    run_pipe_node(t_node *node, t_tabenv *tabenv);
 
+// ------------------------------------- REDIR ----------------------------------
+
+void	reopen_stdin_stdout(int fd);
+void    run_heredoc(t_redir_node *redir_node);
+void    ft_heredoc(t_redir_node *redir_node);
+void	run_redir(t_node *tree, t_data *data);
+
 // ------------------------------------------------------------------------------
-
-
 
 /*				PIPEX & GNL				*/
 // pipex bonus

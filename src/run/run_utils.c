@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 11:20:57 by agtshiba          #+#    #+#             */
-/*   Updated: 2024/08/16 17:59:45 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/25 18:30:21 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,45 @@ char 	*isolating_first_argument(char *str)
 		name[y++] = str[i++];
 	}
 	return (name);
+}
+
+int	ft_fork(void)
+{
+	int	pid;
+
+	pid = fork();
+	if (pid == -1)
+    {
+        printf("error on fork");
+        exit(EXIT_FAILURE);
+    }
+	return (pid);
+}
+
+void    run(t_node *node, t_tabenv *tabenv)
+{
+    // run_exec_node(node, tabenv);
+    // EXEC
+    if (node->type == EXEC)
+        run_exec_node(node, tabenv);
+    // PIPE
+    else if (node->type == PIPE)
+        run_pipe_node(node, tabenv);
+    // REDIR
+    // else if (node->type == 4)
+    //     run_redirection(node, tabenv);
+}
+
+void    dup_right(int *fd)
+{
+    close(fd[1]); // Close the write end of the pipe in the right process
+    dup2(fd[0], 0); // Redirect stdin to the read end of the pipe
+    close(fd[0]);
+}
+
+void   dup_left(int *fd)
+{
+    close(fd[0]);
+	dup2(fd[1], 1);
+	close(fd[1]);    
 }
