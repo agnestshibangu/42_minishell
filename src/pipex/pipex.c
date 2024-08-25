@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 11:22:19 by agtshiba          #+#    #+#             */
-/*   Updated: 2024/08/15 15:07:28 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/21 19:15:19 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include "../../minishell.h"
 
 //int	exec(char *cmd, char **env)
-
 void	exec(char *cmd, char **env)
 {
 	char	*path;

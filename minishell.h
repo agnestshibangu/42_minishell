@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:12:53 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/20 15:21:18 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:07:04 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,41 @@ typedef struct s_tabenv
 	char **env_vars;
 }              t_tabenv;
 
-// typedef struct s_exec_node
-// {
-// 	int		type;
-//     char    *command;
-// }	t_exec_node;
+typedef struct s_node
+{
+	int	type;
+}	t_node;
 
-
+// EXEC NODE
 typedef struct s_exec_node
 {
 	int		type;
 	bool	is_builtin;
 	char	*command;
-	char	**args;
+	// char	**args;
 	// char	*end_args[100];
 }				t_exec_node;
+
+// PIPE NODE
+typedef struct s_pipe_node
+{
+	int		type;
+	t_node	*left_node;
+	t_node	*right_node;
+}	t_pipe_node; 
+
+// REDIR NODE 
+typedef struct s_redir_node
+{
+	int		type;
+	int		r_type;
+	t_node	*cmd;
+	char	*file;
+	char	*end_file;
+	int		mode;
+	int		fd;
+}	t_redir_node;
+
 
 // init.c
 
@@ -85,7 +105,9 @@ int     ft_update_shell_level(t_tabenv *tabenv);
 
 // env_builtins.c
 
-
+// create an exec node 
+// t_node *create_exec_node(int type, bool is_builtin, const char *command, char **args);
+t_node *create_exec_node(int type, bool is_builtin, const char *command);
 
 char 	*isolating_first_argument(char *str);
 
@@ -97,13 +119,28 @@ char	*ft_env(t_tabenv *tabenv);
 // unset
 int ft_unset(const char *str, t_tabenv *tabenv);
 // run exec
-void    run_exec(char *command, t_tabenv *tabenv);
+//void    run_exec(char *command, t_tabenv *tabenv);
+
+// ----------------------------------- EXEC -----------------------------------
+
+void    run_exec_node(t_node *node, t_tabenv *tabenv);
 // change shell level
 int ft_update_shell_level(t_tabenv *tabenv);
-
-
 // void    run_exec(t_exec_node *exec_node, t_tabenv *tabenv)
 void    fill_struct(char *command, t_exec_node *exec_node);
+
+// ------------------------------------- PIPEX ----------------------------------
+t_node *create_pipe_node(int type, t_node *left_node, t_node *right_node);
+void    run_node_left(t_pipe_node *pipe_node, int *fd, t_tabenv *tabenv);
+int	wait_for_process(pid_t pid1);
+void    run_node_right(t_pipe_node *pipe_node, int *fd, t_tabenv *tabenv);
+void    run(t_node *node, t_tabenv *tabenv);
+int		ft_fork(void);
+void    run_pipe_node(t_node *node, t_tabenv *tabenv);
+
+// ------------------------------------------------------------------------------
+
+
 
 /*				PIPEX & GNL				*/
 // pipex bonus
