@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 11:20:57 by agtshiba          #+#    #+#             */
-/*   Updated: 2024/08/25 18:30:21 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/26 20:29:40 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void    run(t_node *node, t_tabenv *tabenv)
     else if (node->type == PIPE)
         run_pipe_node(node, tabenv);
     // REDIR
-    // else if (node->type == 4)
-    //     run_redirection(node, tabenv);
+    else if (node->type == REDIR)
+        run_redir_node(node, tabenv);
 }
 
 void    dup_right(int *fd)

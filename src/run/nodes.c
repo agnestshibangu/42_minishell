@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:49:22 by agtshiba          #+#    #+#             */
-/*   Updated: 2024/08/25 18:26:13 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/26 21:02:02 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,7 @@ t_node *create_exec_node(t_type type, bool is_builtin, const char *command)
 
     node->type = type;
     node->is_builtin = is_builtin;
-
-    // Allouer et copier la commande
     node->command = strdup(command);
-
-    // // Compter le nombre d'arguments
-    // int args_count = 0;
-    // while (args[args_count])
-    //     args_count++;
-
-    // // Allouer l'espace pour les arguments
-    // node->args = malloc((args_count + 1) * sizeof(char *));
-
-    // Copier les arguments
-    // int i = 0;
-    // while (i < args_count)
-    // {
-    //     node->args[i] = strdup(args[i]);
-    //     i++;
-    // }
-    // node->args[args_count] = NULL; // Terminer le tableau avec NULL
 
     return (t_node *)node;
 }
@@ -57,4 +38,20 @@ t_node *create_pipe_node(t_type type, t_node *left, t_node *right)
     pipe_node->right_node = (t_node *)right_node;
     
     return ((t_node *)pipe_node);
+}
+
+t_node *create_redir_node(t_type type, char *stop_word, int redir_type, t_node *node_cmd)
+// t_node *create_redir_node(t_type type, char *redir_type, char *stop_word, t_node *node_cmd)
+{
+    t_redir_node *redir_node = malloc(sizeof(t_redir_node));
+
+    t_exec_node *cmd_node = (t_exec_node *)node_cmd;
+    
+    redir_node->cmd = (t_node *)cmd_node;
+    redir_node->type = type;
+    redir_node->redir_type = redir_type;
+    redir_node->file = stop_word;
+  
+    
+    return ((t_node *)redir_node);
 }

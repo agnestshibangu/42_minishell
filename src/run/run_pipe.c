@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:24:49 by agtshiba          #+#    #+#             */
-/*   Updated: 2024/08/25 18:32:01 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/26 20:19:02 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void    run_node_right(t_pipe_node *pipe_node, int *fd, t_tabenv *tabenv)
 
     if (pipe_node->right_node->type == REDIR)
     {
-        redir_node = (t_redir_node *)pipe_node->right;
+        redir_node = (t_redir_node *)pipe_node->right_node;
         if (redir_node->redir_type == HEREDOC)
         {
             // 
@@ -65,7 +65,7 @@ int is_there_heredoc(t_node *node)
         redir_node = (t_redir_node *)node;
         while (redir_node->redir_type == HEREDOC)
         {
-            if (redir->node->redir_type == EXEC)
+            if (((t_redir_node *)redir_node->cmd)->type == EXEC)
                 return (1);
             redir_node = (t_redir_node *)redir_node->cmd;
         }       
@@ -81,7 +81,6 @@ void    run_pipe_node(t_node *node, t_tabenv *tabenv)
     int     fd[2];
     pid_t   pid1;
     pid_t   pid2;
-    
     
     pipe_node = (t_pipe_node *)node;
     if (pipe(fd) == -1)

@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:11:36 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/25 18:28:32 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/26 21:25:58 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,29 +81,46 @@ int main(int ac, char **av, char **envp)
     // t_node *node = create_exec_node(2, false, "ls", argz);
 	// run_exec_node(node, &tabenv);
 	
-	// -----------------------------------------
-	// EXEC PIPE AND MULTI PIPES
-	// node DROITE -> gauche et DROITE -> droite                  
-	t_node *left_down_level = create_exec_node(EXEC, false, "rev");
-	t_node *right_down_level = create_exec_node(EXEC, false, "tr 'h' 'A'");
-	// node GAUCHE 
-	t_node *left = create_exec_node(EXEC, false, "echo helllo");
-	//t_node *right = create_exec_node(EXEC, false, "rev");
-	// node a DROITE  
-	t_node *sub_pipe_node = create_pipe_node(PIPE, left_down_level, right_down_level);
-	// // pipe principal avec left et right qui est un pipe aussi
-	t_node *pipe_node = create_pipe_node(PIPE, left, sub_pipe_node);
+	// // -----------------------------------------
+	// // EXEC PIPE AND MULTI PIPES
+	// // node DROITE -> gauche et DROITE -> droite                  
+	// t_node *left_down_level = create_exec_node(EXEC, false, "rev");
+	// t_node *right_down_level = create_exec_node(EXEC, false, "tr 'h' 'A'");
+	// // node GAUCHE 
+	// t_node *left = create_exec_node(EXEC, false, "echo helllo");
+	// t_node *right = create_exec_node(EXEC, false, "rev");
+	// // node a DROITE  
+	// t_node *sub_pipe_node = create_pipe_node(PIPE, left_down_level, right_down_level);
+	// // // pipe principal avec left et right qui est un pipe aussi
+	// t_node *pipe_node = create_pipe_node(PIPE, left, sub_pipe_node);
 	// t_node *pipe_node = create_pipe_node(PIPE, left_down_level, right_down_level);
 	
-	//run_exec_node(left, &tabenv);
+	// run_exec_node(left, &tabenv);
 	// run_exec_node(right, &tabenv);
 	
-	run_pipe_node(pipe_node, &tabenv);
+	// run_pipe_node(pipe_node, &tabenv);
 
 	// -----------------------------------------
 	// REDIRECTIONS
+	
+	// on cree un pipe avec une redirection
 
+	t_node *exec_node = create_exec_node(EXEC, false, "cat");
 
+    // Créer un nœud de redirection avec le type HEREDOC
+    // "stop" est le délimiteur, c'est ce qui va arrêter le heredoc
+    t_node *redir_node = create_redir_node(REDIR, "stop", HEREDOC, exec_node);
+
+    // Créer un nœud pour la commande finale qui utilise le heredoc, par exemple "rev" pour inverser le texte
+    t_node *final_exec_node = create_exec_node(EXEC, false, "rev");
+
+    // Créer un pipe node pour connecter le heredoc à la commande finale
+    t_node *pipe_node = create_pipe_node(PIPE, redir_node, final_exec_node);
+
+    // Exécuter le nœud pipe
+    run_pipe_node(pipe_node, &tabenv);
+
+	
 	// -----------------------------------------
 	
 	// command = "blabla";

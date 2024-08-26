@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:12:53 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/25 18:36:32 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/26 21:16:28 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,14 @@ typedef struct s_pipe_node
 // REDIR NODE 
 typedef struct s_redir_node
 {
-	int		type;
-	int		redir_type;
-	t_node	*cmd;
-	char	*file;
-	char	*end_file;
-	int		mode;
-	int		fd;
+	int		type;			//type redir
+	//char	*redir_type;	
+	int		redir_type;		//APPEND, HEREDOC, ETC
+	t_node	*cmd;			//node de la cmd quon veut rediriger vers la bonne sortie
+	char	*file;			//nouvelle sortie OU delimiteur
+	char	*end_file;		//(pour le parsing) mise en place de '\0'
+	int		mode;			//(pour le parsing) init mode de lecture
+	int		fd;				//sortie (1 pour term, 2 pour erreur, 0 pour fichier)
 }	t_redir_node;
 
 
@@ -121,11 +122,6 @@ int     ft_update_shell_level(t_tabenv *tabenv);
 
 // env_builtins.c
 
-// create an exec node 
-// t_node *create_exec_node(int type, bool is_builtin, const char *command, char **args);
-// t_node *create_exec_node(int type, bool is_builtin, const char *command);
-t_node *create_exec_node(t_type type, bool is_builtin, const char *command);
-
 char 	*isolating_first_argument(char *str);
 
 // exit_builtins.c
@@ -140,6 +136,7 @@ int ft_unset(const char *str, t_tabenv *tabenv);
 
 // ----------------------------------- EXEC -----------------------------------
 
+t_node *create_exec_node(t_type type, bool is_builtin, const char *command);
 void    run_exec_node(t_node *node, t_tabenv *tabenv);
 // change shell level
 int ft_update_shell_level(t_tabenv *tabenv);
@@ -150,7 +147,7 @@ void    dup_right(int *fd);
 void   dup_left(int *fd);
 
 // ------------------------------------- PIPEX ----------------------------------
-// t_node *create_pipe_node(int type, t_node *left_node, t_node *right_node);
+
 t_node *create_pipe_node(t_type type, t_node *left, t_node *right);
 void    run_node_left(t_pipe_node *pipe_node, int *fd, t_tabenv *tabenv);
 int	wait_for_process(pid_t pid1);
@@ -161,10 +158,16 @@ void    run_pipe_node(t_node *node, t_tabenv *tabenv);
 
 // ------------------------------------- REDIR ----------------------------------
 
+
+t_node *create_redir_node(t_type type, char *stop_word, int redir_type, t_node *node_cmd);
+//t_node *create_redir_node(t_type type, int redir_type, char *stop_word, t_node *node_cmd);
+// t_node *create_redir_node(t_type type, char *redir_type, char *stop_word, t_node *node_cmd);
 void	reopen_stdin_stdout(int fd);
-void    run_heredoc(t_redir_node *redir_node);
+// void    run_heredoc(t_redir_node *redir_node);
+void    run_heredoc(t_redir_node *redir_node, int p_fd[2]);
 void    ft_heredoc(t_redir_node *redir_node);
-void	run_redir(t_node *tree, t_data *data);
+// void	run_redir(t_node *tree, t_tabenv *tabenv);
+void	run_redir_node(t_node *node, t_tabenv *tabenv);
 
 // ------------------------------------------------------------------------------
 
@@ -183,8 +186,6 @@ int		find_path_var(char *name);
 int		open_file(char *file, int in_or_out);
 int		here_doc(char **av);
 int		create_a_pipe(char *cmd, char **env);
-				//void	no_here_doc(char **av, int i);
-				//int	exec(char *cmd, char **env);
 
 // gnl
 char	*get_next_line(int fd);
