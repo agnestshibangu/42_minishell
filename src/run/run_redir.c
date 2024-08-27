@@ -6,25 +6,25 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 16:59:13 by agtshiba          #+#    #+#             */
-/*   Updated: 2024/08/27 17:53:02 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/27 18:41:49 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-// void	reopen_stdin_stdout(int fd)
-// {
-// 	if (fd == 0)
-// 	{
-// 		if (open("/dev/tty", O_RDONLY) < 0)
-// 			printf("open stdin failed");
-// 	}
-// 	else if (fd == 1)
-// 	{
-// 		if (open("/dev/tty", O_WRONLY) < 0)
-// 			printf("open stdout failed");
-// 	}
-// }
+void	reopen_stdin_stdout(int fd)
+{
+	if (fd == 0)
+	{
+		if (open("/dev/tty", O_RDONLY) < 0)
+			printf("open stdin failed");
+	}
+	else if (fd == 1)
+	{
+		if (open("/dev/tty", O_WRONLY) < 0)
+			printf("open stdout failed");
+	}
+}
 
 // file c'est le delimiter
 // void    run_heredoc(t_redir_node *redir_node)
@@ -39,7 +39,7 @@
 int 	handle_close(int fd)
 {
 	close(fd);
-	fd = open("here_doc", O_RDONLY, 0777);
+	fd = open(".here_doc", O_RDONLY, 0777);
 	return (fd);
 }
 
@@ -69,7 +69,6 @@ int run_heredoc(t_redir_node *redir_node)
 		ft_putchar_fd('\n', file);
 		free(line);
 	}
-	
 }
 
 void    ft_heredoc(t_redir_node *redir_node)
@@ -79,9 +78,9 @@ void    ft_heredoc(t_redir_node *redir_node)
 	file = run_heredoc(redir_node);
 	if (file < 0)
 		printf("error heredoc");
-	// if (dup2(file, 0) < 0)
-	// 	printf("error dup2");
-	// close(file);
+	if (dup2(file, 0) < 0)
+		printf("error dup2");
+	close(file);
 	
 }
 
@@ -95,7 +94,9 @@ void	run_redir_node(t_node *node, t_tabenv *tabenv)
 		// il faudra mettre une copie
 		ft_heredoc(redir_node);
 	}
+	.; ,// printf("run redir");
 	run(redir_node->cmd, tabenv);
-	// reopen_stdin_stdout(redir_node->file);
-	return ;
+	printf("run redir");
+	reopen_stdin_stdout(redir_node->fd);
+	//return ;
 }
