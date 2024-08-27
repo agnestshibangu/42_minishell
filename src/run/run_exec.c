@@ -6,11 +6,23 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 11:21:07 by agtshiba          #+#    #+#             */
-/*   Updated: 2024/08/24 12:38:19 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/27 18:47:25 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+void    redir_in()
+{
+    int stdin_copy;
+
+    stdin_copy = dup(STDIN_FILENO);
+    dup2(node->fd, STDIN_FILENO);
+    run_exec()
+    dup2(stdin_copy, STDIN_FILENO);
+    close(stdin_copy);
+}
+
 
 void run_path(char **argv, char **path)
 {

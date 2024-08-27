@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 16:59:13 by agtshiba          #+#    #+#             */
-/*   Updated: 2024/08/27 18:41:49 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/27 18:53:51 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ void	run_redir_node(t_node *node, t_tabenv *tabenv)
 		// il faudra mettre une copie
 		ft_heredoc(redir_node);
 	}
-	.; ,// printf("run redir");
 	run(redir_node->cmd, tabenv);
 	printf("run redir");
 	reopen_stdin_stdout(redir_node->fd);
