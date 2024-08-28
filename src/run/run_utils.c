@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 11:20:57 by agtshiba          #+#    #+#             */
-/*   Updated: 2024/08/26 20:29:40 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/28 15:25:10 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,35 @@ void   dup_left(int *fd)
     close(fd[0]);
 	dup2(fd[1], 1);
 	close(fd[1]);    
+}
+
+int	is_line_delimiter(char *line, t_redir_node *redir_node)
+{
+	size_t	line_len;
+	size_t	delimiter_len;
+
+	if (!line)
+	{
+		printf("Debug: line is NULL\n");
+		return (0);
+	}
+	if (*line == '\0')
+	{
+		printf("Debug: line is empty\n");
+		return (0);
+	}
+	line_len = ft_strlen(line);
+	delimiter_len = ft_strlen(redir_node->file);
+	if (ft_strncmp(line, redir_node->file, delimiter_len) == 0
+		&& (line_len == delimiter_len))
+		return (1);
+	else
+		return (0);
+}
+
+void	handle_line(char *line, int file)
+{
+	ft_putstr_fd(line, file);
+	ft_putchar_fd('\n', file);
+	free(line);
 }

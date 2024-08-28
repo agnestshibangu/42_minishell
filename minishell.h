@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:12:53 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/28 14:40:04 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/28 15:25:17 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,8 +163,8 @@ t_node *create_redir_node(t_type type, char *stop_word, int redir_type, t_node *
 //t_node *create_redir_node(t_type type, int redir_type, char *stop_word, t_node *node_cmd);
 // t_node *create_redir_node(t_type type, char *redir_type, char *stop_word, t_node *node_cmd);
 void	reopen_stdin_stdout(int fd);
-int run_heredoc(t_redir_node *redir_node);
-// void    run_heredoc(t_redir_node *redir_node);
+// int run_heredoc(t_redir_node *redir_node);
+void    run_heredoc(t_redir_node *redir_node);
 // void    run_heredoc(t_redir_node *redir_node, int p_fd[2]);
 void    ft_heredoc(t_redir_node *redir_node);
 // void	run_redir(t_node *tree, t_tabenv *tabenv);
@@ -173,6 +173,12 @@ void	run_redir_node(t_node *node, t_tabenv *tabenv);
 void	handle_line(char *line, int file);
 
 int 	handle_close(int fd);
+
+// ----------------------------------- RUN UTILS --------------------------------
+
+int	is_line_delimiter(char *line, t_redir_node *redir_node);
+
+void	handle_line(char *line, int file);
 
 // ------------------------------------------------------------------------------
 
