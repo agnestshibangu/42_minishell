@@ -6,22 +6,22 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 11:21:07 by agtshiba          #+#    #+#             */
-/*   Updated: 2024/08/27 18:47:25 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/28 14:19:28 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void    redir_in()
-{
-    int stdin_copy;
+// void    redir_in()
+// {
+//     int stdin_copy;
 
-    stdin_copy = dup(STDIN_FILENO);
-    dup2(node->fd, STDIN_FILENO);
-    run_exec()
-    dup2(stdin_copy, STDIN_FILENO);
-    close(stdin_copy);
-}
+//     stdin_copy = dup(STDIN_FILENO);
+//     dup2(node->fd, STDIN_FILENO);
+//     run_exec()
+//     dup2(stdin_copy, STDIN_FILENO);
+//     close(stdin_copy);
+// }
 
 
 void run_path(char **argv, char **path)
@@ -78,6 +78,17 @@ void	run_exec(char *cmd, t_tabenv *tabenv)
 //         perror("error: failed to fork");
 //         return;
 //     } 
+// 
+// void    redir_in()
+// {
+//     int stdin_copy;
+
+//     stdin_copy = dup(STDIN_FILENO);
+//     dup2(node->fd, STDIN_FILENO);
+//     run_exec()
+//     dup2(stdin_copy, STDIN_FILENO);
+//     close(stdin_copy);
+// }
 //     else if (pid == 0) {  // Child process
 //         argv = ft_split(cmd, ' ');
 //         if (!argv || !argv[0])

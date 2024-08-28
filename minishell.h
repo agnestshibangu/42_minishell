@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:12:53 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/27 17:39:48 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/28 14:40:04 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ int run_heredoc(t_redir_node *redir_node);
 // void    run_heredoc(t_redir_node *redir_node, int p_fd[2]);
 void    ft_heredoc(t_redir_node *redir_node);
 // void	run_redir(t_node *tree, t_tabenv *tabenv);
+
 void	run_redir_node(t_node *node, t_tabenv *tabenv);
 void	handle_line(char *line, int file);
 

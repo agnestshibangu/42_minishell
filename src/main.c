@@ -6,7 +6,7 @@
 /*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:11:36 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/27 18:37:41 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/08/28 14:13:32 by agtshiba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,23 +103,18 @@ int main(int ac, char **av, char **envp)
 	// -----------------------------------------
 	// REDIRECTIONS
 	
-	// on cree un pipe avec une redirection
+	 // Créer un nœud de commande pour la commande "cat"
+    t_node *exec_node = create_exec_node(EXEC, false, "cat");
 
-	t_node *exec_node = create_exec_node(EXEC, false, "rev");
-
-    // Créer un nœud de redirection avec le type HEREDOC
-    // "stop" est le délimiteur, c'est ce qui va arrêter le heredoc
+    // Créer un nœud de redirection avec le type HEREDOC et "stop" comme délimiteur
     t_node *redir_node = create_redir_node(REDIR, "stop", HEREDOC, exec_node);
 
-    // Créer un nœud pour la commande finale qui utilise le heredoc, par exemple "rev" pour inverser le texte
-	t_node *final_exec_node = create_exec_node(EXEC, false, "cat");
-
-    // Créer un pipe node pour connecter le heredoc à la commande finale
-    t_node *pipe_node = create_pipe_node(PIPE, redir_node, final_exec_node);
+    // Créer un nœud de pipe pour connecter le heredoc à la commande "cat"
+    t_node *pipe_node = create_pipe_node(PIPE, redir_node, exec_node);
 
     // Exécuter le nœud pipe
-    //run_redir_node(redir_node, &tabenv);
-	run_pipe_node(pipe_node, &tabenv);
+    run_pipe_node(pipe_node, &tabenv);
+
 	
 	// -----------------------------------------
 	
