@@ -6,13 +6,13 @@
 /*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:11:42 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/11 16:29:50 by thsion           ###   ########.fr       */
+/*   Updated: 2024/08/28 14:53:29 by thsion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int init_env_tab(t_tabenv *tabenv, char **envp)
+int init_env_tab(t_data *data, char **envp)
 {
     char **copy_of_env;
     int     env_len;
@@ -30,7 +30,7 @@ int init_env_tab(t_tabenv *tabenv, char **envp)
         env_len++;
     }
     copy_of_env[env_len] = NULL;
-    tabenv->env_vars = copy_of_env;
+    data->env_vars = copy_of_env;
     printf("copy of env done !\n");
     return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 15:05:17 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/19 11:21:53 by thsion           ###   ########.fr       */
+/*   Updated: 2024/08/26 11:08:30 by thsion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,17 @@ bool	is_space(char c)
 		|| c == '\r')
 		return (true);
 	return (false);
+}
+
+bool	is_all(char c)
+{
+	if (is_quotes(c) || is_symbol(c) || is_space(c))
+		return (true);
+	return (false);
+}
+
+t_node	*print_error_return(char *error)
+{
+	printf("Minishell: Error: %s.\n", error);
+	return (NULL);
 }

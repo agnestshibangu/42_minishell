@@ -1,27 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nodes.c                                            :+:      :+:    :+:   */
+/*   parsing_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/13 13:49:36 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/19 16:04:15 by thsion           ###   ########.fr       */
+/*   Created: 2024/08/25 14:59:31 by thsion            #+#    #+#             */
+/*   Updated: 2024/08/28 15:02:28 by thsion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-t_node	*create_exec_node(void)
+t_node	*check_4_pipes(char **start_scan, char *end_input, t_data *data)
 {
-	t_exec_node *exec_node;
+	t_node	*node;
 
-	exec_node = malloc(sizeof(*exec_node));
-	if (!exec_node)
+	node = parse_execution(start_scan, end_input);
+	if (!node)
 		return (NULL);
-	ft_memset(exec_node, 0, (sizeof(*exec_node)));
-	exec_node->type = EXEC;
-	return ((t_node *)exec_node);
+	if (peek(start_scan, end_input, "|"))
+	{
+		getoken(start_scan, end_input, 0, 0);
+		if (!check_next_arg(*start_scan, end_input))
+		{
+			free(node);
+			return (NULL);
+		}
+		node = create_pipe_node(node, check_4_pipes(start_scan, end_input, data));
+		if (!node)
+		{
+			free(node);
+			return (NULL);
+		}
+	}
+	return (node);
+}
+
+int	check_next_arg(char *start_scan, char *end_input)
+{
+	while (start_scan < end_input && is_space(*start_scan))
+		start_scan++;
+	if (*start_scan == '|')
+	{
+		print_error_return("syntax error near unexpected token '||'");
+		return (0);
+	}
+	if (*start_scan == '<' || *start_scan == '>')
+	{
+		print_error_return("syntax error near unexpected token '|'");
+		return (0);
+	}
+	return (1);
 }
 
 t_node	*create_pipe_node(t_node *left, t_node *right)
@@ -42,26 +72,4 @@ t_node	*create_pipe_node(t_node *left, t_node *right)
 		return (NULL);
 	}
 	return ((t_node *)pipe_node);
-}
-
-t_node	*create_redir_node(int token_type, t_node *cmd, char *start_file,
-			char *end_file)
-{
-	t_redir_node	*redir_node;
-
-	redir_node = malloc(sizeof(*redir_node));
-	if (!redir_node)
-		return (NULL);
-	ft_memset(redir_node, 0, sizeof(*redir_node));
-	redir_node->type = REDIR;
-	redir_node->r_type = token_type;
-	if (token_type == HEREDOC)
-		g_status = -42;
-	redir_node->cmd = cmd;
-	redir_node->file = start_file;
-	redir_node->end_file = end_file;
-	init_fd_and_mode(token_type, redir_node);
-	if (cmd->type == REDIR)
-		return (multiple_redir(cmd, redir_node));
-	return ((t_node *)redir_node);
 }

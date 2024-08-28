@@ -6,7 +6,7 @@
 /*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 11:39:14 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/19 11:32:54 by thsion           ###   ########.fr       */
+/*   Updated: 2024/08/28 15:26:39 by thsion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	getoken(char **start_scan, char *end_scan, char **startoken,
 	{
 		if (startoken)
 			*startoken = str;
-		type = get_type(&str, type, end_scan);
+		type = fill_type(&str, type, end_scan);
 		if (endoken)
 			*endoken = str;
 	}
@@ -64,7 +64,7 @@ int	quoted_token(char **input, char **startoken, char **endoken)
 	return (EXEC);
 }
 
-int fill_type(char **input, int type, char *end_scan)
+int	fill_type(char **input, int type, char *end_scan)
 {
 	if (**input == '|')
 	{
@@ -72,41 +72,23 @@ int fill_type(char **input, int type, char *end_scan)
 		(*input)++;
 	}
 	else if (**input == '<' || **input == '>')
-		type = fill_redir(input, type);
+		type = fill_redirection(input, type);
 	else
 	{
 		type = EXEC;
-		while (*input < end_scan && !is_space(**input) && !is_symbol(**input)
-			&& !is_quotes(**input))
+		while (*input < end_scan && !is_all(**input))
 			(*input)++;
 	}
 	return (type);
 }
 
-int	fill_redir(char **input, int type)
+int	peek(char **start_scan, char *end_input, char *target)
 {
-	if (**input == '<')
-	{
-		(*input)++;
-		if (**input == '<')
-		{
-			type = HEREDOC;
-			(*input)++;
-		}
-		else
-			type = IN_REDIR;
-	}
-	else if (**input == '>')
-	{
-		(*input)++;
-		if (**input == '>')
-		{
-			type = APPEND;
-			(*input)++;
-		}
-		else
-			type = OUT_REDIR;
-	}
-	return (type);
-}
+	char	*str;
 
+	str = *start_scan;
+	while (str < end_input && is_space(*str))     // fonction qui scan l'input en skippant les ' '
+		str++;                                         // et cherche le caractere en target. (en l'occurence '|' etc)
+	*start_scan = str;
+	return (*str && ft_strchr(target, *str));
+}

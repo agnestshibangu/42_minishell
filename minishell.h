@@ -6,7 +6,7 @@
 /*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:12:53 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/19 16:03:56 by thsion           ###   ########.fr       */
+/*   Updated: 2024/08/28 15:40:14 by thsion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@
 # include <fcntl.h>
 # include <stdbool.h>
 
+extern int	g_status;
+
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1 
 # endif
-
-extern int	g_status;
 
 typedef enum e_type
 {
@@ -56,7 +56,6 @@ typedef struct s_node
 typedef struct s_exec_node
 {
 	int		type;
-	bool	is_builtin;
 	char	*args[100];
 	char	*end_args[100];
 }				t_exec_node;
@@ -71,63 +70,97 @@ typedef struct s_pipe_node
 typedef struct s_redir_node
 {
 	int		type;
-	int		r_type;
-	t_node	*cmd;
-	char	*file;
-	char	*end_file;
+	int		redir_type;
 	int		mode;
 	int		fd;
+	char	*file;
+	char	*end_file;
+	t_node	*cmd;
 }				t_redir_node;
 
-typedef struct s_tabenv
+typedef struct s_data
 {
-	char **env_vars;
-	char *start_input;
-}              t_tabenv;
+	int		nbr_cmd;
+	char	**env_vars;
+	char	*start_input;
+}				t_data;
 
 
 // init.c
-int		init_env_tab(t_tabenv *tabenv, char **envp);
+int		init_env_tab(t_data *data, char **envp);
 
 // signal.c
 void	signal_handler(void);
 void	new_routine(int signal);
+void	routine_child(int signal);
 //void	heredoc_signal(void);
 //void	heredoc_signal_handler(int signal);
 
 // free.c
-int		free_minishell(t_tabenv *tabenv); // free the minishell at the very end
+int		free_minishell(t_data *data); // free the minishell at the very end
 void	free_tab(char **tab);
 
-/*              PARSING             */
+/*--------------------------------------------PARSING--------------------------------------------*/
 
 // parsing.c
+t_node	*starting_tree(char *input, t_data *data);
+t_node	*put_endline(t_node *tree, t_data *data);
 bool	check_empty_input(char *input);
-t_node	*starting_tree(char *input, t_tabenv *tabenv);
-t_node	*parse_exec(char **start_scan, char *end_input, t_tabenv *tabenv);
-t_node	*put_endline(t_node *tree);
-void	fill_node(t_exec_node *exec_node, char *startoken, char *endoken,
-		int *i);
+
+// check_&_clean.c
+char	*check_fix_input(char *input, t_data *data);
+char	*clean(char *new_input, char *input, t_data *data);
+char	*new_arg(char *new_input, bool *open_tok, char quote);
+char	*quotes_overload(char **input, char *new_input, t_data *data);
+char	*input_fixed(char *new_input, char **input);
 
 // scanning.c
 int		getoken(char **start_scan, char *end_input, char **startoken,
 		char **endoken);
 int		quoted_token(char **input, char **startoken, char **endoken);
 int		fill_type(char **input, int type, char *end_input);
-int     fill_redir(char **str, int type);
+int		peek(char **start_scan, char *end_input, char *target);
 
-// nodes.c
+// parsing_execution.c
+t_node	*parse_execution(char **start_scan, char *end_input);
 t_node	*create_exec_node(void);
-t_node	*create_pipe_node(t_node *left, t_node *right);
-t_node	*create_redir_node(int token_type, t_node *cmd, char *start_file,
-		char *end_file);
+void	fill_node(t_exec_node *exec_node, char *startoken, char *endoken,
+		int *i);
+void	put_endline_exec(t_data *data, t_exec_node *exec_node);
 
-// parsing_utils.c
+// parsing_utils_1.c
 bool	is_quotes(char c);
 bool	is_symbol(char c);
 bool	is_space(char c);
+bool	is_all(char c);
+t_node	*print_error_return(char *error);
 
-/*				BUILTINS				*/
+// parsing_utils_2.c
+bool	open_quotes(char *input);
+bool	empty_pipe(char *input);
+bool	is_quoted_arg(char *input, char *quote_type);
+void	skip_space(char **input);
+char	*join_char(char *s1, char c);
+
+// parsing_utils_3.c
+void	quotes_checker(int *simple_quote, int *double_quotes, char *input, int i);
+bool	wtfami(int count_quotes);
+
+// parsing_redirections.c
+t_node	*parse_redirection(t_node *node, char **start_scan, char *end_input);
+t_node	*create_redir_node(int token_type, t_node *cmd, char *start_file,
+		char *end_file);
+t_node	*multiple_redir(t_node *cmd, t_redir_node *prev_redir);
+void	init_redirection(int token_type, t_redir_node	*redir_node);
+int		fill_redirection(char **str, int type);
+
+// parsing_pipe.c
+t_node	*check_4_pipes(char **start_scan, char *end_input, t_data *data);
+t_node	*create_pipe_node(t_node *left, t_node *right);
+int		check_next_arg(char *start_scan, char *end_input);
+
+
+/*-------------------------------------------BUILTINS-------------------------------------------*/
 
 // echo_builtins.c
 void	echo(char *str, int out);
@@ -139,22 +172,22 @@ int		change_directory(char *str);
 int		ft_pwd(void);
 
 // export_builtins.c
-int		export_var(char *name, t_tabenv *tabenv);
+int		export_var(char *name, t_data *data);
 
 // unset_builtins.c
 
 
 // env_builtins.c
-char	*print_env(t_tabenv *tabenv);
+char	*print_env(t_data *data);
 
 // exit_builtins.c
 void	handle_exit(char *input);
 
 
 // unset_builtins.c
-int		unset_var(const char *name, t_tabenv *tabenv);
+int		unset_var(const char *name, t_data *data);
 
-/*				PIPEX & GNL				*/
+/*------------------------------------------PIPEX & GNL------------------------------------------*/
 // pipex bonus
 void	exec(char *cmd, char **env);
 void	child(char *cmd, int *p_fd, char **env);
@@ -162,7 +195,7 @@ void	parent(int *p_fd);
 void	my_free_tab(char **tab);
 void	no_here_doc(char **av);
 void	finish_pipe(char **av, int ac, char **env);
-void	handle_pipex(char **av, int ac, t_tabenv *tabenv);
+void	handle_pipex(char **av, int ac, t_data *data);
 char	*get_every_path(char **env, char *cmd);
 char	*find_path_variable_function(char **env);
 int		find_path_var(char *name);
@@ -180,7 +213,7 @@ void	free_backup(char *backup);
 char	*my_extract(char *line);
 void	free_storage(char *storage);
 
-/*				LIBFT				*/
+/*------------------------------------------LIBFT------------------------------------------*/
 
 int		ft_atoi(char *str);
 int		ft_isalnum(int c);

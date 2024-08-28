@@ -182,13 +182,13 @@ void	no_here_doc(char **av)
 }
 
 
-void handle_pipex(char **av, int ac, t_tabenv *tabenv)
+void handle_pipex(char **av, int ac, t_data *data)
 {	
 	int		i;
 	char	*cmd;
 	char 	**tab;
 
-	tab = tabenv->env_vars;
+	tab = data->env_vars;
 	i = 0;
 	if (ft_strncmp(av[1], "here_doc", 8) == 0)
 	{

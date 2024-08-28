@@ -6,7 +6,7 @@
 /*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 11:11:28 by thsion            #+#    #+#             */
-/*   Updated: 2024/08/18 11:41:15 by thsion           ###   ########.fr       */
+/*   Updated: 2024/08/25 16:40:32 by thsion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,3 +60,12 @@ void	new_routine(int signal)
 		exit (g_status);
 	}
 } */
+
+void	routine_child(int signal)
+{
+	if (signal == SIGINT)
+	{
+		printf("\n");
+		g_status = 130;
+	}
+}
