@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 11:21:28 by agtshiba          #+#    #+#             */
-/*   Updated: 2024/09/04 17:24:56 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/09/07 21:16:34 by thsion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	ft_exit_and_free(char **input_cpy, t_data *data)
 {
 	int	i;
 
-	printf("free and exit\n");
 	if (input_cpy[1])
 	{
 		i = 0;
@@ -76,7 +75,7 @@ void	actualize_status_and_exit(char *status)
 	}
 }
 
-void	ft_exit(char **args)
+void	ft_exit(char **args, t_data *data)
 {
 	int	i;
 
@@ -85,7 +84,6 @@ void	ft_exit(char **args)
 		i = 0;
 		while (args[1][i])
 		{
-			printf("je suis dans la premiere condition");
 			if (!ft_isdigit(args[1][i]))
 			{
 				printf("exit\nminishell: exit: %s: numeric argument required\n",
@@ -98,7 +96,9 @@ void	ft_exit(char **args)
 	}
 	else
 	{
-		printf("je suis dans la seconde condition");
+		my_free_tab(data->env_vars);
+		free_nodes(data->first_node);
+		free(data->start_input);
 		exit(g_status);
 	}
 }

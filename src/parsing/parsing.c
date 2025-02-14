@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agtshiba <agtshiba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thsion <thsion@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 13:56:40 by thsion            #+#    #+#             */
-/*   Updated: 2024/09/07 11:22:58 by agtshiba         ###   ########.fr       */
+/*   Updated: 2024/09/07 21:48:00 by thsion           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ bool	check_empty_input(char *input, t_data *data)
 		exit (1);
 	}
 	if (*input == '\0' || is_space(*input))
+	{
+		free(input);
+		return (false);
+	}
+	if (open_quotes(input))
 	{
 		free(input);
 		return (false);
@@ -42,7 +47,6 @@ t_node	*starting_tree(char *input, t_data *data)
 	tree = check_4_pipes(&tmp, end_input, data);
 	if (!tree)
 	{
-		free(input);
 		free(data->start_input);
 		return (NULL);
 	}
